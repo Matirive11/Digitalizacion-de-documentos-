@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 45);
             $table->string('tipo', 45);
             $table->string('ruta', 200);
-            $table->int('id_tipo_archivo');
+            $table->integer('id_tipo_archivo');
 
             $table->timestamps();
         });
