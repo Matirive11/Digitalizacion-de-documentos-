@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\SubirArchivoRequest;
+use Illuminate\Support\Facades\Storage;
 class ArchivoController extends Controller
 {
     /**
@@ -19,15 +20,21 @@ class ArchivoController extends Controller
      */
     public function create()
     {
-        dd("create");
-    }
+        return view('archivo.create');
+      }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SubirArchivoRequest  $request)
     {
-        dd("store");
+        $archivo = $request->file('archivo');
+        $nombre = $archivo->hashName();
+        Storage::disk('local')->put("public/logos/{$nombre}", file_get_contents($archivo));
+
+        return redirect()->back()->with([
+            'exito' => 'El archivo se ha guardado'
+        ]);
     }
 
     /**
@@ -43,8 +50,9 @@ class ArchivoController extends Controller
      */
     public function edit(string $id)
     {
-        dd("edit");
-    }
+        return view('archivo.show', [
+            'url' => Storage::url('logos\wOqU6GpQAesKjTX9NxJKkligXhGcYyXhzFmMSrWC.png')
+        ]);    }
 
     /**
      * Update the specified resource in storage.
