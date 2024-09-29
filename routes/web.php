@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\RolController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,5 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('archivo', ArchivoController::class);
 Route::resource('categoria', CategoriaController::class);
+Route::resource('rol', RolController::class);
+
 
 require __DIR__.'/auth.php';
