@@ -5,8 +5,8 @@
     </div>
     @forelse ($roles as $rol)
         <div class="mt-4">
-            <a href="/rol/{{ $rol['id'] }} class=bg-blue-600 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out">
-                <h2>{{ $rol['nombre'] }}</h2>
+            <a href="/rol/{{ $rol['id'] }}" >
+                <h2 class="bg-blue-600 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300 ease-in-out">{{ $rol['nombre'] }}</h2>
             </a>
         </div>
     @empty
