@@ -14,7 +14,11 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-6 rounded-lg shadow-md w-96">
         <h2 class="text-xl font-semibold mb-4">Formulario de Registro</h2>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 63d2e881c971b64d0daaed10ea1543fe643f6c66
         <div class="mb-4">
             <div class="h-2 bg-blue-200 rounded-full">
                 <div id="progress" class="progress-bar h-full bg-blue-500 rounded-full" style="width: 0%;"></div>
@@ -57,5 +61,8 @@
     </script>
 </body>
 </html>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 63d2e881c971b64d0daaed10ea1543fe643f6c66
