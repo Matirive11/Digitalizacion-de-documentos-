@@ -1,6 +1,6 @@
 <x-layout>
     <x-titulo>Editar permiso: {{ $permiso['nombre'] }}</x-titulo>
-    <form action="/rol/{{ $permiso['id'] }}" method="POST">
+    <form action="/permiso/{{ $permiso['id'] }}" method="POST">
         @csrf
         @method('PATCH')
         <div class="flex flex-col mb-4">

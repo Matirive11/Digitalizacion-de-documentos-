@@ -7,6 +7,8 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\PersonaController;
+
 
 
 Route::get('/', function () {
@@ -27,5 +29,6 @@ Route::resource('categoria', CategoriaController::class);
 Route::resource('rol', RolController::class);
 Route::resource('tipo_archivo', TipoArchivoController::class);
 Route::resource('permiso', PermisoController::class);
+Route::resource('persona', PersonaController::class);
 
 require __DIR__.'/auth.php';
