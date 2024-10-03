@@ -11,11 +11,12 @@
     </div>
     <div class="mt-6 flex gap-x-6">
             <a href="/persona/{{ $persona['dni'] }}/edit" class="p-4 bg-blue-200 text-blue-900">Editar la persona</a>
-            <form method="POST" persona="/persona/{{ $persona['dni'] }}" dni="form-eliminar">
+            <form method="POST" action="/persona/{{ $persona['dni'] }}" id="form-eliminar">
                 @csrf
                 @method('DELETE')
-                <button class="p-4 text-red-800 font-bold" id="boton-eliminar">Eliminar la persona</button>
+                <button type="submit" class="p-4 text-red-800 font-bold" id="boton-eliminar">Eliminar la persona</button>
             </form>
+
     </div>
     </x-layout>
     <script>
