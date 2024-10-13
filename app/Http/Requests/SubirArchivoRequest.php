@@ -22,10 +22,18 @@ class SubirArchivoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'archivo' => [
-                'required',
-                File::types(['png', 'jpg'])->max(1024 * 2)->min(50)
-            ]
+            'archivo' => 'required|file|mimes:jpeg,png,jpg,gif,pdf|max:10240', // Acepta imágenes y PDFs
+
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'archivo.required' => 'Debe seleccionar un archivo.',
+            'archivo.file' => 'El archivo debe ser válido.',
+            'archivo.mimes' => 'Solo se permiten archivos en formato: PNG, JPG, JPEG, PDF.',
+            'archivo.max' => 'El archivo no puede superar los 2MB.',
+            'archivo.min' => 'El archivo debe ser de al menos 50KB.',
         ];
     }
 }

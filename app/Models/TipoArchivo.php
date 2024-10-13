@@ -11,5 +11,5 @@ class TipoArchivo extends Model
     protected $guarded = [];
     public $timestamps = false; // Desactiva los timestamps
 
-    protected $table = 'Tipo_archivo';
+    protected $table = 'tipo_archivo';
 }

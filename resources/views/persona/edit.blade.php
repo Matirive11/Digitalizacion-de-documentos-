@@ -1,32 +1,30 @@
 <x-layout>
-    <x-titulo>Editar persona: {{ $persona['nombre'] }}</x-titulo>
-    <form action="/persona/{{ $persona['dni'] }}" method="POST">
+    <x-titulo>Editar archivo: {{ $archivo['nombre'] }}</x-titulo>
+    <form action="{{ route('archivo.update', $archivo['id']) }}" method="POST">
         @csrf
         @method('PATCH')
+
         <div class="flex flex-col mb-4">
-            <label for="dni">DNI:</label>
-            <input type="text" name="dni" id="dni" value="{{ $persona['dni'] }}">
+            <label for="nombre">Nombre del archivo:</label>
+            <input type="text" name="nombre" id="nombre" value="{{ $archivo['nombre'] }}">
         </div>
+
         <div class="flex flex-col mb-4">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" value="{{ $persona['nombre'] }}">
+            <label for="tipo">Tipo:</label>
+            <input type="text" name="tipo" id="tipo" value="{{ $archivo['tipo'] }}">
         </div>
+
         <div class="flex flex-col mb-4">
-            <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" id="apellido" value="{{ $persona['apellido'] }}">
+            <label for="ruta">Ruta de almacenamiento:</label>
+            <input type="text" name="ruta" id="ruta" value="{{ $archivo['ruta'] }}" readonly>
+            <small>La ruta no puede ser editada.</small>
         </div>
+
         <div class="flex flex-col mb-4">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="{{ $persona['email'] }}">
+            <label for="id_tipo_archivo">ID Tipo de Archivo:</label>
+            <input type="number" name="id_tipo_archivo" id="id_tipo_archivo" value="{{ $archivo['id_tipo_archivo'] }}">
         </div>
-        <div class="flex flex-col mb-4">
-            <label for="telefono">Numero de telefono:</label>
-            <input type="number" name="telefono" id="telefono" value="{{ $persona['telefono'] }}">
-        </div>
-        <div class="flex flex-col mb-4">
-            <label for="fecha_nacimiento">Fecha de nacimiento:</label>
-            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ $persona['fecha_nacimiento'] }}">
-        </div>
+
         <input type="submit" value="Guardar" class="p-4 bg-blue-200 text-blue-900">
     </form>
-    </x-layout>
+</x-layout>
