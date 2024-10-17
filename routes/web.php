@@ -8,8 +8,8 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PersonaController;
-
-
+use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,5 +30,7 @@ Route::resource('rol', RolController::class);
 Route::resource('tipo_archivo', TipoArchivoController::class);
 Route::resource('permiso', PermisoController::class);
 Route::resource('persona', PersonaController::class);
+Route::resource('supervisor', SupervisorController::class);
+Route::resource('usuario', UsuarioController::class);
 
 require __DIR__.'/auth.php';
