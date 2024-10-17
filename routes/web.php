@@ -10,6 +10,7 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\documentoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,5 +33,7 @@ Route::resource('permiso', PermisoController::class);
 Route::resource('persona', PersonaController::class);
 Route::resource('supervisor', SupervisorController::class);
 Route::resource('usuario', UsuarioController::class);
+Route::resource('documento', documentoController::class);
+
 
 require __DIR__.'/auth.php';
