@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 100);
             $table->string('tipo', 45);
-            $table->string('ruta', 255);
-            $table->unsignedBigInteger('id_tipo_archivo');
-
-            $table->foreign('id_tipo_archivo')->references('id')->on('tipo_archivo')->onDelete('cascade');
+            $table->string('ruta', 200);
+            $table->integer('id_tipo_archivo');
 
             $table->timestamps();
         });
