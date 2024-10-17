@@ -7,7 +7,14 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\RolPermisoController;
+
 
 
 
@@ -30,5 +37,11 @@ Route::resource('rol', RolController::class);
 Route::resource('tipo_archivo', TipoArchivoController::class);
 Route::resource('permiso', PermisoController::class);
 Route::resource('persona', PersonaController::class);
+Route::resource('usuario', UsuarioController::class);
+Route::resource('notificacion', NotificacionController::class);
+Route::resource('documento', DocumentoController::class);
+Route::resource('firma_digital', FirmaDigitalController::class);
+Route::resource('rol_permiso', RolPermisoController::class);
+Route::resource('supervisor', SupervisorController::class);
 
 require __DIR__.'/auth.php';

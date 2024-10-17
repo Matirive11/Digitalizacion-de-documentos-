@@ -22,7 +22,7 @@ class SubirArchivoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'archivo' => 'required|file|mimes:jpeg,png,jpg,gif,pdf|max:10240', // Acepta imágenes y PDFs
+            'archivo' => 'required|file|mimes:jpeg,png,jpg,gif,pdf|max:10240', 
 
         ];
     }
