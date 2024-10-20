@@ -14,6 +14,8 @@ use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\RolPermisoController;
+use App\Http\Controllers\CustomLoginController;
+
 
 
 
@@ -31,6 +33,7 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::resource('archivo', ArchivoController::class);
 Route::resource('categoria', CategoriaController::class);
 Route::resource('rol', RolController::class);

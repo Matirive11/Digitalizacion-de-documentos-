@@ -2,112 +2,150 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Usuario;
-use App\Models\Rol; // Asegúrate de importar el modelo Rol
-use Illuminate\Support\Facades\Hash;
+use App\Models\Archivo;
+use App\Models\TipoArchivo;
+use App\Http\Requests\SubirArchivoRequest;
+use Illuminate\Support\Facades\Storage;
 
-class UsuarioController extends Controller
+class ArchivoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        // Obtener todos los registros de usuarios
-        $usuarios = Usuario::with('rol')->get(); // Cargar la relación 'rol'
+        // Obtener todos los registros de archivos
+        $archivos = Archivo::all();
 
-        // Devolver la vista con los usuarios
-        return view('usuario.index', ['usuarios' => $usuarios]);
+        // Devolver la vista con los archivos
+        return view('archivo.index', [
+            'archivos' => $archivos,
+        ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $roles = Rol::all(); // Obtener todos los roles disponibles
-        return view('usuario.create', compact('roles'));
+       // Obtener las descripciones de los tipos de archivo
+       $tiposArchivos = TipoArchivo::all(); // O puedes usar pluck si solo necesitas las descripciones: TipoArchivo::pluck('descripcion', 'id');
+
+       // Pasar las descripciones a la vista
+       return view('archivo.create', [
+           'tiposArchivos' => $tiposArchivos,
+       ]);
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(SubirArchivoRequest $request)
     {
-        // Validar la solicitud
-        $datos = $request->validate([
-            'nombre' => 'required',
-            'email' => 'required|email|unique:usuarios,email',
-            'password' => 'required|min:6',
-            'rol_id' => 'required|exists:roles,id', // Asegúrate que el rol existe
-        ]);
+        // Obtener el archivo subido
+        $archivo = $request->file('archivo');
+        $nombre = $archivo->hashName();
+        $ruta = "public/archivos/{$nombre}";
 
-        // Crear el usuario
-        $datos['password'] = Hash::make($datos['password']); // Encriptar la contraseña
-        Usuario::create($datos); // Crear el usuario
+        // Guardar el archivo en el disco
+        Storage::put($ruta, file_get_contents($archivo));
+
+        // Guardar la información del archivo en la base de datos
+        Archivo::create([
+            'nombre' => $archivo->getClientOriginalName(),
+            'tipo' => $archivo->extension(),
+            'ruta' => $ruta,
+            'id_tipo_archivo' => $request->input('id_tipo_archivo'), // Asume que este campo viene del formulario
+        ]);
 
         // Redirigir con un mensaje de éxito
-        return redirect()->route('usuario.index')->with('exito', 'El usuario se ha creado correctamente.');
+        return redirect()->route('archivo.index')->with('exito', 'El archivo se ha subido correctamente');
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
-        $usuario = Usuario::with('rol')->find($id); // Cargar la relación 'rol'
+        $archivo = Archivo::find($id);
 
-        if ($usuario === null) {
+        if ($archivo === null) {
             abort(404);
         }
 
-        return view('usuario.show', ['usuario' => $usuario]);
+        return view('archivo.show', [
+            'archivo' => $archivo,
+        ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(string $id)
     {
-        $usuario = Usuario::find($id);
-        $roles = Rol::all(); // Obtener todos los roles disponibles
+        $archivo = Archivo::find($id);
 
-        if ($usuario === null) {
+        if ($archivo === null) {
             abort(404);
         }
 
-        return view('usuario.edit', [
-            'usuario' => $usuario,
-            'roles' => $roles, // Pasar roles a la vista
+        return view('archivo.edit', [
+            'archivo' => $archivo,
         ]);
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(SubirArchivoRequest $request, string $id)
     {
-        // Validar la solicitud
-        $datos = $request->validate([
-            'nombre' => 'required',
-            'email' => 'required|email',
-            'password' => 'nullable|min:6',
-            'rol_id' => 'required|exists:roles,id', // Validar rol
-        ]);
+        $archivo = Archivo::find($id);
 
-        $usuario = Usuario::find($id);
-
-        if ($usuario === null) {
+        if ($archivo === null) {
             abort(404);
         }
 
-        // Encriptar contraseña si se proporciona
-        if (!empty($datos['password'])) {
-            $datos['password'] = Hash::make($datos['password']);
-        } else {
-            unset($datos['password']); // No actualizar si no se proporciona
+        // Obtener el archivo subido y la información
+        if ($request->hasFile('archivo')) {
+            $nuevoArchivo = $request->file('archivo');
+            $nombre = $nuevoArchivo->hashName();
+            $ruta = "public/archivos/{$nombre}";
+
+            // Borrar el archivo anterior si existe
+            Storage::delete($archivo->ruta);
+
+            // Guardar el nuevo archivo en el disco
+            Storage::put($ruta, file_get_contents($nuevoArchivo));
+
+            // Actualizar la información en la base de datos
+            $archivo->update([
+                'nombre' => $nuevoArchivo->getClientOriginalName(),
+                'tipo' => $nuevoArchivo->extension(),
+                'ruta' => $ruta,
+                'id_tipo_archivo' => $request->input('id_tipo_archivo'),
+            ]);
         }
 
-        // Actualizar el usuario
-        $usuario->update($datos);
-
-        return redirect()->route('usuario.index')->with('exito', 'El usuario se ha actualizado correctamente.');
+        return redirect()->route('archivo.index')->with('exito', 'El archivo se ha actualizado correctamente');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
-        $usuario = Usuario::find($id);
+        $archivo = Archivo::find($id);
 
-        if ($usuario === null) {
+        if ($archivo === null) {
             abort(404);
         }
 
-        // Eliminar el usuario
-        $usuario->delete();
+        // Eliminar el archivo del disco
+        Storage::delete($archivo->ruta);
 
-        return redirect()->route('usuario.index')->with('exito', 'El usuario se ha eliminado correctamente.');
+        // Eliminar el registro de la base de datos
+        $archivo->delete();
+
+        return redirect()->route('archivo.index')->with('exito', 'El archivo se ha eliminado correctamente');
     }
 }
