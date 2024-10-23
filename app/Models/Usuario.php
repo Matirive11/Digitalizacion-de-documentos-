@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    protected $table = 'usuarios';
 
-    // Atributos que se pueden asignar masivamente
     protected $fillable = [
-        'Correo_electronico',
-        'contrasenia',
-        'Fecha_creacion',
-        'Estado',
+        'persona_dni', 'correo_electronico', 'contrasenia', 'estado',
     ];
+
+    public $timestamps = true;
+
+    protected $primaryKey = 'id';
 }

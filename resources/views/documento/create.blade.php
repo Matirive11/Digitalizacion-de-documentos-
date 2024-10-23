@@ -1,30 +1,23 @@
 <x-layout>
-    <x-titulo>Crear Documento</x-titulo>
+    <x-titulo>Crear documento</x-titulo>
     <form action="/documento" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="flex flex-col mb-4">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="Nombre" id="nombre" required>
+            <label for="titulo">Título del documento:</label>
+            <input type="text" name="titulo" id="titulo">
         </div>
         <div class="flex flex-col mb-4">
-            <label for="descripcion">Descripción:</label>
-            <input type="text" name="Descripcion" id="descripcion" required>
+            <label for="archivo">Archivo del documento:</label>
+            <input type="file" name="archivo" id="archivo">
         </div>
         <div class="flex flex-col mb-4">
-            <label for="Tipo_documento">Tipo de documento:</label>
-            <input type="file" name="Tipo_documento" id="Tipo_documento" required>
-        </div>
-        <div class="flex flex-col mb-4">
-            <label for="Fecha_subida">Fecha de subida:</label>
-            <input type="date" name="Fecha_subida" id="Fecha_subida" required>
-        </div>
-        <div class="flex flex-col mb-4">
-            <label for="Estado">Estado:</label>
-            <select name="Estado" id="Estado" required>
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
+            <label for="tipo_documento">Tipo de documento:</label>
+            <select name="tipo_documento" id="tipo_documento">
+                @foreach($tiposDocumento as $tipo)
+                    <option value="{{ $tipo->id }}">{{ $tipo->descripcion }}</option>
+                @endforeach
             </select>
         </div>
-        <input type="submit" value="Crear" class="p-4 bg-blue-200 text-blue-900">
+        <input type="submit" value="Subir documento" class="p-4 bg-blue-200 text-blue-900">
     </form>
 </x-layout>

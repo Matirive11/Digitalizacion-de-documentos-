@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supervisor;
+use App\Models\FirmaDigital;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 
-class SupervisorController extends Controller
+class FirmaDigitalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Obtener supervisores con su usuario relacionado
-        $supervisores = Supervisor::with('usuario')->get();
+        // Obtener firmas digitales con su usuario relacionado
+        $firmas = FirmaDigital::with('usuario')->get();
 
-        return view('supervisor.index', [
-            'supervisores' => $supervisores,
+        return view('firma_digital.index', [
+            'firmas' => $firmas,
         ]);
     }
 
@@ -29,7 +29,7 @@ class SupervisorController extends Controller
         // Obtener todos los usuarios disponibles
         $usuarios = Usuario::all();
 
-        return view('supervisor.create', [
+        return view('firma_digital.create', [
             'usuarios' => $usuarios,
         ]);
     }
@@ -40,14 +40,14 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         $datos = $request->validate([
-            'nombre' => 'required',
+            'archivo' => 'required',
             'usuario_id' => 'required|exists:usuarios,id',
         ]);
 
-        // Crear el supervisor
-        Supervisor::create($datos);
+        // Crear la firma digital
+        FirmaDigital::create($datos);
 
-        return redirect()->route('supervisor.index')->with('exito', 'Supervisor creado con éxito.');
+        return redirect()->route('firma_digital.index')->with('exito', 'Firma digital creada con éxito.');
     }
 
     /**
@@ -55,15 +55,15 @@ class SupervisorController extends Controller
      */
     public function show(string $id)
     {
-        // Obtener el supervisor con el usuario relacionado
-        $supervisor = Supervisor::with('usuario')->find($id);
+        // Obtener la firma digital con el usuario relacionado
+        $firma = FirmaDigital::with('usuario')->find($id);
 
-        if ($supervisor === null) {
+        if ($firma === null) {
             abort(404);
         }
 
-        return view('supervisor.show', [
-            'supervisor' => $supervisor,
+        return view('firma_digital.show', [
+            'firma' => $firma,
         ]);
     }
 
@@ -72,17 +72,17 @@ class SupervisorController extends Controller
      */
     public function edit(string $id)
     {
-        $supervisor = Supervisor::find($id);
+        $firma = FirmaDigital::find($id);
 
-        if ($supervisor === null) {
+        if ($firma === null) {
             abort(404);
         }
 
-        // Obtener todos los usuarios disponibles para editar
+        // Obtener todos los usuarios para editar la firma digital
         $usuarios = Usuario::all();
 
-        return view('supervisor.edit', [
-            'supervisor' => $supervisor,
+        return view('firma_digital.edit', [
+            'firma' => $firma,
             'usuarios' => $usuarios,
         ]);
     }
@@ -93,20 +93,20 @@ class SupervisorController extends Controller
     public function update(Request $request, string $id)
     {
         $datos = $request->validate([
-            'nombre' => 'required',
+            'archivo' => 'required',
             'usuario_id' => 'required|exists:usuarios,id',
         ]);
 
-        $supervisor = Supervisor::find($id);
+        $firma = FirmaDigital::find($id);
 
-        if ($supervisor === null) {
+        if ($firma === null) {
             abort(404);
         }
 
-        // Actualizar el supervisor
-        $supervisor->update($datos);
+        // Actualizar la firma digital
+        $firma->update($datos);
 
-        return redirect()->route('supervisor.index')->with('exito', 'Supervisor actualizado con éxito.');
+        return redirect()->route('firma_digital.index')->with('exito', 'Firma digital actualizada con éxito.');
     }
 
     /**
@@ -114,14 +114,14 @@ class SupervisorController extends Controller
      */
     public function destroy(string $id)
     {
-        $supervisor = Supervisor::find($id);
+        $firma = FirmaDigital::find($id);
 
-        if ($supervisor === null) {
+        if ($firma === null) {
             abort(404);
         }
 
-        $supervisor->delete();
+        $firma->delete();
 
-        return redirect()->route('supervisor.index')->with('exito', 'Supervisor eliminado con éxito.');
+        return redirect()->route('firma_digital.index')->with('exito', 'Firma digital eliminada con éxito.');
     }
 }

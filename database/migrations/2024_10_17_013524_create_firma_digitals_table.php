@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('archivo', function (Blueprint $table) {
+        Schema::create('firma_digital', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
-            $table->string('tipo', 45);
-            $table->string('ruta', 200);
-            $table->integer('id_tipo_archivo');
-
+            $table->text('firma');
+            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('documento_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('documento_id')->references('id')->on('documentos');
             $table->timestamps();
         });
+
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('archivo');
+        Schema::dropIfExists('firma_digitals');
     }
 };

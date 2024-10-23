@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instituto Superior Adventista de Misiones</title>
-    @vite('resources/css/app.css') 
+    @vite('resources/css/app.css')
 </head>
 <body class="bg-white min-h-screen flex justify-center items-center">
     <div class="bg-white border-4 black-blue-800 w-full max-w-4xl text-blue-600 p-6 rounded-lg shadow-xl fade-in">
@@ -25,10 +25,17 @@
         </div>
 
         <div class="text-center">
-            <button class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
-                Comenzar Inscripción
-            </button>
+            @auth
+                <button class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
+                    Comenzar Inscripción
+                </button>
+            @else
+                <a href="{{ route('login') }}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
+                    Inicia Sesión o Registrarse
+                </a>
+            @endauth
         </div>
+
     </div>
 </body>
 

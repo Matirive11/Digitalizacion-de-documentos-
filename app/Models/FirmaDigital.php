@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Supervisor extends Model
+class FirmaDigital extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $table = 'supervisores';
+    protected $table = 'firma_digital';
 
 }

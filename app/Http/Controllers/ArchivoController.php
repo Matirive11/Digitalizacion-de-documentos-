@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Archivo;
 use App\Models\TipoArchivo;
 use App\Http\Requests\SubirArchivoRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ArchivoController extends Controller

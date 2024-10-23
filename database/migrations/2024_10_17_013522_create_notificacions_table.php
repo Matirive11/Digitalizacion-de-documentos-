@@ -9,23 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('archivo', function (Blueprint $table) {
+        Schema::create('notificaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
-            $table->string('tipo', 45);
-            $table->string('ruta', 200);
-            $table->integer('id_tipo_archivo');
-
+            $table->text('mensaje');
+            $table->tinyInteger('visto');
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }
+
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('archivo');
+        Schema::dropIfExists('notificacions');
     }
 };
