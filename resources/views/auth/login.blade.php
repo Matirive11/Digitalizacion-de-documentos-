@@ -1,6 +1,5 @@
 <x-guest-layout>
     <div class="auth-container bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
-        <img src="{{ asset('path-to-your-logo.png') }}" alt="ISAM Logo" class="mx-auto mb-6" style="max-width: 120px;">
         <h2 class="text-center text-2xl font-bold text-blue-800 mb-6">
             {{ __('Iniciar Sesión') }}
         </h2>

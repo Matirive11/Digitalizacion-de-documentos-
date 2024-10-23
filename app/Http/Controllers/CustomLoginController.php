@@ -13,6 +13,7 @@ class CustomLoginController extends Controller
     {
         // Validar los campos de entrada
         $request->validate([
+            'dni' => 'required',
             'email' => 'required|email',
             'password' => 'required',
         ]);
