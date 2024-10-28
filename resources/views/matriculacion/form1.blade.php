@@ -1,4 +1,6 @@
 <x-form>
+    <x-slot name="section1">
+
             <h2 class="text-xl font-bold text-blue-800 mb-4">DATOS DEL SOLICITANTE</h2>
 
                 <!-- Apellido y Nombres -->
@@ -181,6 +183,7 @@
                         </div>
                     </form>
                 </div>
+            </x-slot>
             </x-form>
 
 
