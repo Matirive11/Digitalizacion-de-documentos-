@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
@@ -15,7 +16,16 @@ use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\RolPermisoController;
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/complete-profile', function () {
+        return view('matriculacion.form1');
+    })->name('complete-profile');
+    Route::post('/matriculation/store', function () {
+        // Aquí puedes simular el guardado o mostrar un mensaje temporal
+        return 'Formulario guardado temporalmente (esto es solo una prueba)';
+    })->name('matriculation.store');
 
+});
 Route::get('/', function () {
     return view('welcome');
 });

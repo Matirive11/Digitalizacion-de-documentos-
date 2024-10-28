@@ -11,9 +11,10 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    public function create()
+    {
+        return view('profile.complete');
+    }
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -56,5 +57,24 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'birthdate' => 'required|date',
+            'gender' => 'required|string',
+        ]);
+
+        // Guardar la información adicional del perfil
+        $request->user()->profile()->create([
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
+        ]);
+
+        return redirect()->route('dashboard')->with('status', 'Perfil completado con éxito');
     }
 }
