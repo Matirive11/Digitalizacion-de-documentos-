@@ -26,9 +26,9 @@
 
         <div class="text-center">
             @auth
-                <button class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
-                    Comenzar Inscripción
-                </button>
+            <a href="{{ route('complete-profile') }}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
+                Comenzar Inscripcion
+            </a>
             @else
                 <a href="{{ route('login') }}" class="bg-blue-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 hover:bg-blue-900">
                     Inicia Sesión o Registrarse
