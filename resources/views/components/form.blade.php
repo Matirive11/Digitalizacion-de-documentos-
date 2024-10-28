@@ -28,74 +28,32 @@
         <form id="form" method="POST" action="{{ route('matriculation.store') }}">
             @csrf
 
-            <!-- Contenedor de Slots (para las secciones del formulario) -->
+            <!-- Contenedor de Slots para las secciones del formulario -->
             <div class="section-content mb-4">
-                <!-- Sección 1 -->
+                <!-- El desarrollador define el contenido de cada sección con estos slots -->
                 <div id="section1">
-                    <h2 class="text-xl font-bold text-blue-800 mb-4">DATOS DEL SOLICITANTE</h2>
-                    <div class="flex gap-4 mb-4">
-                        <div class="flex-1">
-                            <x-input-label for="last_name" :value="__('Apellido')" />
-                            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" required />
-                        </div>
-                        <div class="flex-1">
-                            <x-input-label for="first_name" :value="__('Nombres')" />
-                            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" required />
-                        </div>
-                    </div>
+                    {{ $section1 ?? '' }}
                 </div>
-
-                <!-- Sección 2 -->
                 <div id="section2" class="hidden">
-                    <h2 class="text-xl font-bold text-blue-800 mb-4">DATOS DE CONTACTO</h2>
-                    <div class="flex gap-4 mb-4">
-                        <div class="flex-1">
-                            <x-input-label for="phone" :value="__('Teléfono fijo')" />
-                            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" required />
-                        </div>
-                        <div class="flex-1">
-                            <x-input-label for="cellphone" :value="__('Teléfono celular')" />
-                            <x-text-input id="cellphone" class="block mt-1 w-full" type="text" name="cellphone" required />
-                        </div>
-                    </div>
+                    {{ $section2 ?? '' }}
                 </div>
-
-                <!-- Sección 3 -->
                 <div id="section3" class="hidden">
-                    <h2 class="text-xl font-bold text-blue-800 mb-4">OTROS DATOS</h2>
-                    <div class="flex gap-4 mb-4">
-                        <div>
-                            <x-input-label :value="__('¿Es Adventista del 7mo Día?')" />
-                            <div class="flex items-center gap-4 mt-1">
-                                <label class="flex items-center">
-                                    <input type="radio" name="adventist" value="yes" class="mr-2"> Sí
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="adventist" value="no" class="mr-2"> No
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <x-input-label :value="__('¿Está bautizado?')" />
-                            <div class="flex items-center gap-4 mt-1">
-                                <label class="flex items-center">
-                                    <input type="radio" name="baptized" value="yes" class="mr-2"> Sí
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="baptized" value="no" class="mr-2"> No
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    {{ $section3 ?? '' }}
                 </div>
             </div>
 
-            <!-- Botones de Navegación -->
-            <div class="flex justify-between">
+            <!-- Botones de Navegación al Pie -->
+            <div class="flex justify-between items-center mt-6">
+                <!-- Botón de Atrás -->
                 <button type="button" id="backButton" class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600 hidden">Atrás</button>
-                <button type="button" id="nextButton" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Siguiente</button>
-                <button type="submit" id="submitButton" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 hidden">Enviar</button>
+
+                <!-- Botones de Confirmar y Siguiente a la derecha -->
+                <div class="flex gap-4">
+                    <button type="button" id="nextButton" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Siguiente</button>
+                    <button type="submit" id="submitButton" class="bg-blue-800 text-white p-2 rounded hover:bg-blue-900 hidden">Confirmar y Continuar</button>
+                </div>
             </div>
+
         </form>
     </div>
 
