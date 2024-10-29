@@ -5,10 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Documento extends Model
+class documento extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    protected $table = 'documentos';
 
+    // Atributos que se pueden asignar masivamente
+    protected $fillable = [
+        'Nombre',
+        'Descripcion',
+        'Tipo_documento',
+        'Fecha_subida',
+        'Estado',
+    ];
 }

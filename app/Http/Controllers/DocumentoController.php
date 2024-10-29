@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documento;
-use App\Models\Usuario;
-use App\Models\FirmaDigital;
+use App\Models\documento;
 use Illuminate\Http\Request;
 
-class DocumentoController extends Controller
+class documentoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Obtener documentos con su usuario y firma digital relacionados
-        $documentos = Documento::with(['usuario', 'firmaDigital'])->get();
-
+        $documentos = documento::all();
         return view('documento.index', [
             'documentos' => $documentos,
         ]);
@@ -27,14 +23,7 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-        // Obtener usuarios y firmas digitales disponibles
-        $usuarios = Usuario::all();
-        $firmasDigitales = FirmaDigital::all();
-
-        return view('documento.create', [
-            'usuarios' => $usuarios,
-            'firmasDigitales' => $firmasDigitales,
-        ]);
+        return view('documento.create');
     }
 
     /**
@@ -42,17 +31,30 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
+        // Validación del formulario
         $datos = $request->validate([
-            'titulo' => 'required',
-            'contenido' => 'required',
-            'usuario_id' => 'required|exists:usuarios,id',
-            'firma_digital_id' => 'nullable|exists:firma_digitals,id',
+            'Nombre' => 'required|max:255',
+            'Descripcion' => 'required|max:255',
+            'Tipo_documento' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'Fecha_subida' => 'required|date',
+            'Estado' => 'required|in:activo,inactivo',
         ]);
 
-        // Crear el documento
-        Documento::create($datos);
+        // Guardar el archivo subido
+        if ($request->hasFile('Tipo_documento')) {
+            $rutaArchivo = $request->file('Tipo_documento')->store('documentos');
+        }
 
-        return redirect()->route('documento.index')->with('exito', 'Documento creado con éxito.');
+        // Crear el registro en la base de datos
+        documento::create([
+            'Nombre' => $datos['Nombre'],
+            'Descripcion' => $datos['Descripcion'],
+            'Tipo_documento' => $rutaArchivo,
+            'Fecha_subida' => $datos['Fecha_subida'],
+            'Estado' => $datos['Estado'],
+        ]);
+
+        return redirect()->route('documento.index');
     }
 
     /**
@@ -60,8 +62,7 @@ class DocumentoController extends Controller
      */
     public function show(string $id)
     {
-        // Obtener el documento con el usuario y firma digital relacionados
-        $documento = Documento::with(['usuario', 'firmaDigital'])->find($id);
+        $documento = documento::find($id);
 
         if ($documento === null) {
             abort(404);
@@ -77,20 +78,14 @@ class DocumentoController extends Controller
      */
     public function edit(string $id)
     {
-        $documento = Documento::find($id);
+        $documento = documento::find($id);
 
         if ($documento === null) {
             abort(404);
         }
 
-        // Obtener usuarios y firmas digitales para editar el documento
-        $usuarios = Usuario::all();
-        $firmasDigitales = FirmaDigital::all();
-
         return view('documento.edit', [
             'documento' => $documento,
-            'usuarios' => $usuarios,
-            'firmasDigitales' => $firmasDigitales,
         ]);
     }
 
@@ -99,23 +94,32 @@ class DocumentoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validación del formulario
         $datos = $request->validate([
-            'titulo' => 'required',
-            'contenido' => 'required',
-            'usuario_id' => 'required|exists:usuarios,id',
-            'firma_digital_id' => 'nullable|exists:firma_digitals,id',
+            'Nombre' => 'required|max:255',
+            'Descripcion' => 'required|max:255',
+            'Tipo_documento' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'Fecha_subida' => 'required|date',
+            'Estado' => 'required|in:activo,inactivo',
         ]);
 
-        $documento = Documento::find($id);
-
-        if ($documento === null) {
-            abort(404);
+        // Si se subió un nuevo archivo, guárdalo
+        $rutaArchivo = null;
+        if ($request->hasFile('Tipo_documento')) {
+            $rutaArchivo = $request->file('Tipo_documento')->store('documentos');
         }
 
         // Actualizar el documento
-        $documento->update($datos);
+        $documento = documento::find($id);
+        $documento->update([
+            'Nombre' => $datos['Nombre'],
+            'Descripcion' => $datos['Descripcion'],
+            'Tipo_documento' => $rutaArchivo ? $rutaArchivo : $documento->Tipo_documento,
+            'Fecha_subida' => $datos['Fecha_subida'],
+            'Estado' => $datos['Estado'],
+        ]);
 
-        return redirect()->route('documento.index')->with('exito', 'Documento actualizado con éxito.');
+        return redirect()->route('documento.index');
     }
 
     /**
@@ -123,14 +127,7 @@ class DocumentoController extends Controller
      */
     public function destroy(string $id)
     {
-        $documento = Documento::find($id);
-
-        if ($documento === null) {
-            abort(404);
-        }
-
-        $documento->delete();
-
-        return redirect()->route('documento.index')->with('exito', 'Documento eliminado con éxito.');
+        documento::where('id', $id)->delete();
+        return redirect()->route('documento.index');
     }
 }
