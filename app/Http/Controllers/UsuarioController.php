@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;  // Asegúrate de estar usando el modelo Supervisor
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Rol; // Asegúrate de tener esta línea para importar el modelo

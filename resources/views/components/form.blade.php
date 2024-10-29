@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario Multi-sección</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    @vite(['resources/css/estilos.css'])
     <style>
         .progress-bar {
             transition: width 0.3s ease;
@@ -39,6 +40,9 @@
                 </div>
                 <div id="section3" class="hidden">
                     {{ $section3 ?? '' }}
+                </div>
+                <div id="section4" class="hidden">
+                    {{ $section4 ?? '' }}
                 </div>
             </div>
 

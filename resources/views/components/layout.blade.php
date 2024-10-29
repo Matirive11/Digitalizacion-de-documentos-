@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name', 'Mi Aplicación') }}</title>
     <!-- Importar Tailwind CSS -->
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css','resources/css/estilos.css'])
 </head>
 <body class="bg-blue-50 text-gray-800">
     <!-- Contenedor principal -->
