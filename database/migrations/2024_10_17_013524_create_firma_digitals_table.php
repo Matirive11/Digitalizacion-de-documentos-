@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('firma');
             $table->unsignedBigInteger('usuario_id');
             $table->unsignedBigInteger('documento_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('usuario_id')->references('id')->on('users');
             $table->foreign('documento_id')->references('id')->on('documentos');
             $table->timestamps();
         });

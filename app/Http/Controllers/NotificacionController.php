@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notificacion;
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotificacionController extends Controller
@@ -13,8 +13,8 @@ class NotificacionController extends Controller
      */
     public function index()
     {
-        // Obtener notificaciones con su usuario relacionado
-        $notificaciones = Notificacion::with('usuario')->get();
+        // Obtener notificaciones con su users relacionado
+        $notificaciones = Notificacion::with('users')->get();
 
         return view('notificacion.index', [
             'notificaciones' => $notificaciones,
@@ -27,10 +27,10 @@ class NotificacionController extends Controller
     public function create()
     {
         // Obtener usuarios para asignar a la notificación
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
 
         return view('notificacion.create', [
-            'usuarios' => $usuarios,
+            
         ]);
     }
 
@@ -41,7 +41,7 @@ class NotificacionController extends Controller
     {
         $datos = $request->validate([
             'contenido' => 'required',
-            'usuario_id' => 'required|exists:usuarios,id',
+
         ]);
 
         // Guardar la notificación en la base de datos
@@ -55,8 +55,8 @@ class NotificacionController extends Controller
      */
     public function show(string $id)
     {
-        // Obtener la notificación con el usuario relacionado
-        $notificacion = Notificacion::with('usuario')->find($id);
+        // Obtener la notificación con el users relacionado
+        $notificacion = Notificacion::with('users')->find($id);
 
         if ($notificacion === null) {
             abort(404);
@@ -83,7 +83,7 @@ class NotificacionController extends Controller
 
         return view('notificacion.edit', [
             'notificacion' => $notificacion,
-            'usuarios' => $usuarios,
+
         ]);
     }
 
@@ -94,7 +94,7 @@ class NotificacionController extends Controller
     {
         $datos = $request->validate([
             'contenido' => 'required',
-            'usuario_id' => 'required|exists:usuarios,id',
+
         ]);
 
         // Actualizar la notificación

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('notificaciones', function (Blueprint $table) {
             $table->id();
-            $table->text('mensaje');
+            $table->text('Mensaje');
             $table->tinyInteger('visto');
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('usuario_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

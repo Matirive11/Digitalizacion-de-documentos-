@@ -13,7 +13,7 @@
         <div class="flex flex-col mb-4">
             <label for="tipo_documento">Tipo de documento:</label>
             <select name="tipo_documento" id="tipo_documento">
-                @foreach($tiposDocumento as $tipo)
+                @foreach($tipo_Documento as $tipo)
                     <option value="{{ $tipo->id }}">{{ $tipo->descripcion }}</option>
                 @endforeach
             </select>
