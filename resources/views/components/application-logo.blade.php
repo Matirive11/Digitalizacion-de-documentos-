@@ -1,2 +1,2 @@
-<img src="{{ asset('images/logo1.png') }}" alt="Logo Adventista">
+<img src="{{ asset('images/logo2.png') }}" alt="Logo Adventista">
 
