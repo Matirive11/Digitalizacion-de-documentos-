@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');       // Nombre
             $table->string('last_name');        // Apellido
             $table->integer('dni')->unique();   // DNI único
+            $table->integer('telefono')->unique();
             $table->string('email')->unique();  // Correo electrónico único
             $table->timestamp('email_verified_at')->nullable(); // Verificación de email opcional
             $table->string('password');         // Contraseña
