@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AdmissionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +13,8 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\RolPermisoController;
 
+Route::get('/admissions', [AdmissionController::class, 'create'])->name('admissions.create');
+Route::post('/admissions', [AdmissionController::class, 'store'])->name('admissions.store');
 Route::middleware(['auth'])->group(function () {
     Route::get('/complete-profile', function () {
         return view('matriculacion.form1');

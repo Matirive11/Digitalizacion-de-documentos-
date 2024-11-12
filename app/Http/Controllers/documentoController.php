@@ -23,7 +23,13 @@ class documentoController extends Controller
      */
     public function create()
     {
-        return view('documento.create');
+        // Obtener todos los tipos de documentos desde la base de datos
+        $tipo_Documento = documento::all();
+
+        // Pasar la variable a la vista
+        return view('documento.create', [
+            'tipo_Documento' => $tipo_Documento,
+        ]);
     }
 
     /**

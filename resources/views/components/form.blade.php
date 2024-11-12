@@ -44,6 +44,18 @@
                 <div id="section4" class="hidden">
                     {{ $section4 ?? '' }}
                 </div>
+                <div id="section5" class="hidden">
+                    {{ $section5 ?? '' }}
+                </div>
+                <div id="section6" class="hidden">
+                    {{ $section6 ?? '' }}
+                </div>
+                <div id="section7" class="hidden">
+                    {{ $section7 ?? '' }}
+                </div>
+                <div id="section8" class="hidden">
+                    {{ $section8 ?? '' }}
+                </div>
             </div>
 
             <!-- Botones de Navegación al Pie -->
@@ -68,7 +80,7 @@
         const backButton = document.getElementById('backButton');
         const submitButton = document.getElementById('submitButton');
 
-        const formSections = ["section1", "section2", "section3"];
+        const formSections = ["section1", "section2", "section3", "section4","section5", "section6", "section7", "section8"];
         let currentSectionIndex = 0;
 
         function updateProgress() {
