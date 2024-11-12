@@ -1,3 +1,4 @@
+
 <x-layout>
     <div class="flex justify-between">
         <x-titulo>Roles</x-titulo>
@@ -13,4 +14,3 @@
         <h2 class="text-lg">No existen roles cargados en la plataforma</h2>
     @endforelse
     </x-layout>
-    

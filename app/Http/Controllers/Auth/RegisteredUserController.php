@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -42,17 +43,23 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'dni' => $request->dni,
             'email' => $request->email,
+            'telefono' => $request->telefono,
             'password' => Hash::make($request->password),
             'estado' => 1,
         ]);
-
-        dd($user); // Verificar si el usuario fue creado correctamente
+        // Verificar si es el primer usuario y asignar el rol de 'admin' si es el caso
+        if (User::count() === 1) {
+            $user->assignRole('admin');
+        } else {
+            $user->assignRole('user'); // Opcional: asignar un rol básico
+        }
+        dd($user->getRoleNames()); // Esto debería mostrar ['admin'] para el primer usuario
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('welcome');
     }
 
 
