@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\RolPermisoController;
+use App\Http\Controllers\UserController;
 
 Route::get('/admissions', [AdmissionController::class, 'create'])->name('admissions.create');
 Route::post('/admissions', [AdmissionController::class, 'store'])->name('admissions.store');
@@ -48,5 +49,7 @@ Route::resource('notificacion', NotificacionController::class);
 Route::resource('documento', DocumentoController::class);
 Route::resource('firma_digital', FirmaDigitalController::class);
 Route::resource('rol_permiso', RolPermisoController::class);
+Route::resource('users', UserController::class);
+
 });
 require __DIR__.'/auth.php';

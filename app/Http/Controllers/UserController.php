@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role; // Importar el modelo de roles
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    // Mostrar todos los usuarios
     public function index()
     {
         $users = User::all();
@@ -18,7 +17,7 @@ class UserController extends Controller
     // Mostrar el formulario para crear un nuevo usuario
     public function create()
     {
-        $roles = Role::all(); // Obtener todos los roles
+        $roles = Role::all(); 
         return view('users.create', compact('roles'));
     }
 
@@ -30,9 +29,10 @@ class UserController extends Controller
             'last_name' => 'required',
             'dni' => 'required|unique:users,dni',
             'email' => 'required|email|unique:users,email',
+            'telefono' => ['required', 'regex:/^[0-9]{10}$/'],
             'password' => 'required|min:8|confirmed',
             'estado' => 'boolean',
-            'roles' => 'array', // Los roles que se asignarán
+            'roles' => 'array',
         ]);
 
         $user = User::create([
@@ -40,6 +40,7 @@ class UserController extends Controller
             'last_name' => $datos['last_name'],
             'dni' => $datos['dni'],
             'email' => $datos['email'],
+            'telefono' => $datos['telefono'],
             'password' => bcrypt($datos['password']),
             'estado' => $datos['estado'] ?? 1,
         ]);
@@ -86,9 +87,10 @@ class UserController extends Controller
             'last_name' => 'required',
             'dni' => 'required|unique:users,dni,' . $dni,
             'email' => 'required|email|unique:users,email,' . $dni,
+            'telefono' => ['required', 'regex:/^[0-9]{10}$/'],
             'password' => 'nullable|min:8|confirmed',
             'estado' => 'boolean',
-            'roles' => 'array', // Los roles que se asignarán
+            'roles' => 'array',
         ]);
 
         $user = User::where('dni', $dni)->first();
@@ -101,13 +103,13 @@ class UserController extends Controller
             'last_name' => $datos['last_name'],
             'dni' => $datos['dni'],
             'email' => $datos['email'],
+            'telefono' => $datos['telefono'],
             'password' => $datos['password'] ? bcrypt($datos['password']) : $user->password,
             'estado' => $datos['estado'] ?? $user->estado,
         ]);
 
-        // Asignar roles seleccionados al usuario
         if ($request->has('roles')) {
-            $user->syncRoles($request->roles); // Sincronizar roles
+            $user->syncRoles($request->roles);
         }
 
         return redirect()->route('users.index');

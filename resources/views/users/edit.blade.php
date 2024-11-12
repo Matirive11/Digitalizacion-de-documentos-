@@ -19,6 +19,11 @@
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
         </div>
+        <div class="flex flex-col mb-4">
+            <label for="telefono">Telefono:</label>
+            <input type="number" name="telefono" id="telefono" value="{{ old('telefono', $user->telefono) }}" required>
+        </div>
+
 
         <div class="flex flex-col mb-4">
             <label for="roles">Roles:</label>

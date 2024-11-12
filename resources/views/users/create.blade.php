@@ -21,6 +21,10 @@
             <label for="email">Correo Electrónico:</label>
             <input type="email" name="email" id="email" required class="p-2 border border-gray-300">
         </div>
+        <div class="flex flex-col mb-4">
+            <label for="telefono">Telefono:</label>
+            <input type="number" name="telefono" id="telefono" required class="p-2 border border-gray-300">
+        </div>
 
         <div class="flex flex-col mb-4">
             <label for="password">Contraseña:</label>
