@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -11,7 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Notifications\UserRegistered;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegisteredMail;
 
 class RegisteredUserController extends Controller
 {
@@ -38,6 +40,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Crear el usuario
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -47,20 +50,21 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'estado' => 1,
         ]);
-        // Verificar si es el primer usuario y asignar el rol de 'admin' si es el caso
+
         if (User::count() === 1) {
             $user->assignRole('admin');
         } else {
-            $user->assignRole('user'); // Opcional: asignar un rol básico
+            $user->assignRole('user');
         }
-        dd($user->getRoleNames()); // Esto debería mostrar ['admin'] para el primer usuario
+
+        $admins = User::role('admin')->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new UserRegisteredMail($user));
+        }
 
         event(new Registered($user));
-
         Auth::login($user);
 
         return redirect()->route('welcome');
     }
-
-
 }
