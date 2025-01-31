@@ -17,7 +17,7 @@ class UserController extends Controller
     // Mostrar el formulario para crear un nuevo usuario
     public function create()
     {
-        $roles = Role::all(); 
+        $roles = Role::all();
         return view('users.create', compact('roles'));
     }
 
@@ -47,8 +47,9 @@ class UserController extends Controller
 
         // Asignar roles seleccionados al usuario
         if ($request->has('roles')) {
-            $user->assignRole($request->roles);
+            $user->syncRoles($request->roles); // Asegura que se asignan correctamente
         }
+
 
         return redirect()->route('users.index');
     }
@@ -56,7 +57,6 @@ class UserController extends Controller
     {
         // Buscar el usuario por su DNI
         $user = User::where('dni', $dni)->first();
-
         // Si el usuario no se encuentra, abortamos con un error 404
         if ($user === null) {
             abort(404); // El usuario no fue encontrado

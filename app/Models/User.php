@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
-    protected $guard_name = 'web'; 
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -50,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function admission()
+    {
+        return $this->hasOne(Admission::class);
+    }
+
 }

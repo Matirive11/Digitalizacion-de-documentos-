@@ -17,6 +17,7 @@ class RoleSeeder extends Seeder
         // Crear roles si no existen
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
+        $supervisorRole = Role::firstOrCreate(['name' => 'supervisor']);
 
         // Buscar el usuario con ID 1
         $user = User::find(1);

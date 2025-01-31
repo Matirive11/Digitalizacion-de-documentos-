@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Admission;
 
 class AdmissionController extends Controller
@@ -12,7 +13,6 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
     {
-        // Reglas de validación
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -33,13 +33,12 @@ class AdmissionController extends Controller
             'carrera_interes' => 'nullable|string|max:100',
         ]);
 
-        // Almacenamiento de datos
-        $admission = Admission::create($request->all());
+        // Asignar la inscripción al usuario autenticado
+        $admission = Admission::updateOrCreate(
+            ['user_id' => Auth::id()], // Si ya existe, actualiza
+            $request->all()
+        );
 
-        // Retornar respuesta
-        return response()->json([
-            'message' => 'Admisión creada exitosamente.',
-            'data' => $admission
-        ], 201);
+        return redirect()->route('dashboard')->with('status', 'Inscripción guardada exitosamente.');
     }
 }

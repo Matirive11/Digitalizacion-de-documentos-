@@ -12,11 +12,12 @@ use Illuminate\Queue\SerializesModels;
 class UserRegisteredMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $user; // Declara la propiedad para almacenar el usuario
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($user)
     {
         $this->user = $user;
     }
