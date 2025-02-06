@@ -8,7 +8,7 @@
 </head>
 <body class="bg-white min-h-screen flex justify-center items-center">
     <div class="bg-white border-4 black-blue-800 w-full max-w-4xl text-blue-600 p-6 rounded-lg shadow-xl fade-in">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo ISAM" class="absolute top-6 right-6 w-16 h-16 object-contain">
+        <img src="{{ asset(path: 'images/logo.png') }}" alt="Logo ISAM" class="absolute top-6 right-6 w-16 h-16 object-contain">
 
         <header class="text-center mb-6">
             <h1 class="text-3xl font-bold uppercase">INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>

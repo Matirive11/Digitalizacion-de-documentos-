@@ -15,7 +15,9 @@
         <div class="flex flex-col gap-6">
             <!-- Tarjeta de Información del Usuario -->
             <div class="bg-white p-6 rounded-lg shadow-md">
+
                 <h2 class="text-xl font-semibold text-gray-800 mb-2">Información del Usuario</h2>
+
                 <p class="text-gray-600">Nombre completo: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</p>
                 <p class="text-gray-600">Email: {{ Auth::user()->email }}</p>
                 <p class="text-gray-600"><strong>Rol:</strong> {{ Auth::user()->getRoleNames()->first() }}</p>

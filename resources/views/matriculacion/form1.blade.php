@@ -187,7 +187,7 @@
             </x-slot>
         </div>
 
-    <!-- Sección 2 -->
+        <!-- Sección 2 -->
         <div x-show="currentSection === 2">
             <x-slot name="section2" class="section2-styles">
                 <div class="container">

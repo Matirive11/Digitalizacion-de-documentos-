@@ -8,20 +8,8 @@
 </head>
 <body class="bg-gray-100">
 
-    <nav class="bg-blue-800 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="{{ route('dashboard') }}" class="text-xl font-bold">Dashboard</a>
-            <ul class="flex space-x-4">
-                <li><a href="{{ route('dashboard') }}" class="hover:text-gray-300">Inicio</a></li>
-                <li><a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                    class="hover:text-gray-300">Cerrar Sesión</a></li>
-            </ul>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                @csrf
-            </form>
-        </div>
-    </nav>
+    <x-navbar />
+
 
     <div class="container mx-auto p-6">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Perfil</h2>

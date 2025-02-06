@@ -10,6 +10,8 @@
 </head>
 <body class="bg-blue-50 text-gray-800">
     <!-- Contenedor principal -->
+    <x-navbar />
+
     <div class="pt-20 container mx-auto">
         <div class="bg-white shadow-md rounded-md p-6">
            {{$slot}}

@@ -13,7 +13,9 @@
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
+
         <div class="text-center mb-6">
             <h1 class="text-3xl font-bold text-blue-800">INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
         </div>

@@ -10,7 +10,7 @@
         "laravel/socialite": "*",
         "laravel/tinker": "^2.9",
         "nunomaduro/collision": "^8.0",
-        "pestphp/pest": "^3.0",
+        "pestphp/pest": "*",
         "pestphp/pest-plugin-laravel": "^3.0",
         "spatie/laravel-permission": "^6.10"
     },

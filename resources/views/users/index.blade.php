@@ -1,4 +1,5 @@
 <x-layout>
+
     <div class="flex justify-between">
         <x-titulo>Usuarios</x-titulo>
         <a href="{{ route('users.create') }}" class="p-4 bg-blue-200 text-blue-900 rounded-full font-bold py-2 px-4 text-center">Agregar Usuario</a>
