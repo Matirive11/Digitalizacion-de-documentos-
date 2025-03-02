@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    // Listar todos los usuarios
     public function index()
     {
         $users = User::all();
@@ -47,56 +48,42 @@ class UserController extends Controller
 
         // Asignar roles seleccionados al usuario
         if ($request->has('roles')) {
-            $user->syncRoles($request->roles); // Asegura que se asignan correctamente
+            $user->syncRoles($request->roles);
         }
-
 
         return redirect()->route('users.index');
     }
-    public function show(string $dni)
-    {
-        // Buscar el usuario por su DNI
-        $user = User::where('dni', $dni)->first();
-        // Si el usuario no se encuentra, abortamos con un error 404
-        if ($user === null) {
-            abort(404); // El usuario no fue encontrado
-        }
 
-        // Pasar el usuario a la vista show
+    // Mostrar detalles de un usuario
+    public function show(string $id)
+    {
+        $user = User::findOrFail($id);
         return view('users.show', compact('user'));
     }
 
     // Mostrar el formulario para editar un usuario
-    public function edit(string $dni)
+    public function edit(string $id)
     {
-        $user = User::where('dni', $dni)->first();
+        $user = User::findOrFail($id);
         $roles = Role::all(); // Obtener todos los roles disponibles
-
-        if ($user === null) {
-            abort(404);
-        }
-
         return view('users.edit', compact('user', 'roles'));
     }
 
     // Actualizar un usuario
-    public function update(Request $request, string $dni)
+    public function update(Request $request, string $id)
     {
         $datos = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'dni' => 'required|unique:users,dni,' . $dni,
-            'email' => 'required|email|unique:users,email,' . $dni,
+            'dni' => 'required|unique:users,dni,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'telefono' => ['required', 'regex:/^[0-9]{10}$/'],
             'password' => 'nullable|min:8|confirmed',
             'estado' => 'boolean',
             'roles' => 'array',
         ]);
 
-        $user = User::where('dni', $dni)->first();
-        if ($user === null) {
-            abort(404);
-        }
+        $user = User::findOrFail($id);
 
         $user->update([
             'first_name' => $datos['first_name'],
@@ -116,9 +103,9 @@ class UserController extends Controller
     }
 
     // Eliminar un usuario
-    public function destroy(string $dni)
+    public function destroy(string $id)
     {
-        User::where('dni', $dni)->delete();
+        User::findOrFail($id)->delete();
         return redirect()->route('users.index');
     }
 }

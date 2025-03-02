@@ -1,7 +1,7 @@
 <x-layout>
     <x-titulo>Editar usuario: {{ $user->first_name }} {{ $user->last_name }}</x-titulo>
 
-    <form action="{{ route('users.update', $user->dni) }}" method="POST">
+    <form action="{{ route('users.update', $user->id) }}" method="POST">
         @csrf
         @method('PATCH')
 

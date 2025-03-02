@@ -14,12 +14,15 @@
     </div>
 
     <div class="mt-6 flex gap-x-6">
-        <a href="{{ route('users.edit', $user->dni) }}" class="p-4 bg-blue-200 text-blue-900">Editar usuario</a>
+        <a href="{{ route('users.edit', $user->id) }}" class="p-4 bg-blue-200 text-blue-900">Editar usuario</a>
 
-        <form method="POST" action="{{ route('users.destroy', $user->dni) }}" id="form-eliminar">
+        <form method="POST" action="{{ route('users.destroy', $user->id) }}" id="form-eliminar">
             @csrf
             @method('DELETE')
-            <button type="submit" class="p-4 text-red-800 font-bold" id="boton-eliminar">Eliminar usuario</button>
+            <button type="submit" class="p-3 text-red-800 font-bold flex items-center gap-x-2" id="boton-eliminar">
+                <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                <span>Eliminar</span>
+            </button>
         </form>
     </div>
 
