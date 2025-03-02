@@ -16,20 +16,23 @@ use App\Http\Controllers\InscripcionController;
 use App\Http\Controllers\UserController;
 
 Route::middleware(['auth', 'role:admin|supervisor'])->group(function () {
-    Route::get('/inscripciones', [InscripcionController::class, 'index'])->name('inscripciones.index');
-    Route::get('/inscripciones/{id}', [InscripcionController::class, 'show'])->name('inscripciones.show');
-});
-Route::get('/admissions', [AdmissionController::class, 'create'])->name('admissions.create');
-Route::post('/admissions', [AdmissionController::class, 'store'])->name('admissions.store');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/complete-profile', function () {
-        return view('matriculacion.form1');
-    })->name('complete-profile');
-    Route::post('/matriculation/store', function () {
-        // Aquí puedes simular el guardado o mostrar un mensaje temporal
-        return 'Formulario guardado temporalmente (esto es solo una prueba)';
-    })->name('matriculation.store');
+    Route::get('/inscripciones', [AdmissionController::class, 'index'])->name('inscripciones.index');
+    Route::get('/inscripciones/{id}', [AdmissionController::class, 'show'])->name('inscripciones.show');
+    Route::get('/inscripciones/{edit}', [AdmissionController::class, 'edit'])->name('inscripciones.edit');
+    Route::delete('/inscripciones/{id}', [AdmissionController::class, 'destroy'])->name('inscripciones.destroy');
 
+});
+
+// Rutas protegidas (solo para usuarios autenticados)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/complete-profile', [AdmissionController::class, 'create'])->name('complete-profile'); // Página de perfil completo
+    Route::post('/matriculation/store', [AdmissionController::class, 'store'])->name('matriculation.store'); // Guardar admisión
+
+    // ✅ Nueva ruta para que ADMIN o SUPERVISOR vean las solicitudes
+    Route::middleware(['can:view-admissions'])->group(function () {
+        Route::get('/admin/admissions', [AdmissionController::class, 'index'])->name('admin.admissions'); // Ver todas las admisiones
+        Route::get('/admin/admissions/{id}', [AdmissionController::class, 'show'])->name('admin.admissions.show'); // Ver detalle de una admisión
+    });
 });
 Route::get('/', function () {
     return view('welcome');

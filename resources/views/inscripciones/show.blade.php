@@ -1,19 +1,35 @@
-@extends('layouts.app')
+<x-layout title="Detalles de la Admisión">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-gray-800">Solicitud de Admisión #{{ $admission->id }}</h2>
 
-@section('content')
-    <div class="container">
-        <h1 class="text-2xl font-bold mb-4">Detalles de la Inscripción</h1>
+        <div class="mt-4">
+            <p><strong>Nombre:</strong> {{ $admission->user->first_name ?? 'N/A' }} {{ $admission->user->last_name ?? 'N/A' }}</p>
+            <p><strong>Email:</strong> {{ $admission->user->email ?? 'N/A' }}</p>
+            <p><strong>Teléfono:</strong> {{ $admission->numero_telefono ?? 'N/A' }}</p>
+            <p><strong>Carrera de Interés:</strong> {{ $admission->carrera_interes ?? 'No especificado' }}</p>
+            <p><strong>Estado:</strong>
+                @if ($admission->estado ?? false)
+                    <span class="bg-green-500 text-white px-2 py-1 rounded">Aprobada</span>
+                @else
+                    <span class="bg-yellow-500 text-white px-2 py-1 rounded">Pendiente</span>
+                @endif
+            </p>
+        </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <p><strong>Nombre:</strong> {{ $inscripcion->nombre }} {{ $inscripcion->apellido }}</p>
-            <p><strong>Email:</strong> {{ $inscripcion->email }}</p>
-            <p><strong>Carrera de Interés:</strong> {{ $inscripcion->carrera_interes }}</p>
-            <p><strong>Estado:</strong> {{ $inscripcion->estado_solicitud ?? 'Pendiente' }}</p>
-            <p><strong>Fecha de Nacimiento:</strong> {{ $inscripcion->fecha_nacimiento }}</p>
-            <p><strong>Teléfono:</strong> {{ $inscripcion->numero_telefono }}</p>
-            <p><strong>Nacionalidad:</strong> {{ $inscripcion->nacionalidad }}</p>
-
-            <a href="{{ route('inscripciones.index') }}" class="bg-gray-500 text-white px-3 py-1 rounded mt-4">Volver</a>
+        <div class="mt-6 flex gap-4">
+            <a href="{{ route('inscripciones.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                Volver a la Lista
+            </a>
+            <a href="{{ route('inscripciones.edit', $admission->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Editar
+            </a>
+            <form action="{{ route('inscripciones.destroy', $admission->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta admisión?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Eliminar
+                </button>
+            </form>
         </div>
     </div>
-@endsection
+</x-layout>

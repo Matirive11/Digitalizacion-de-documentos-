@@ -30,7 +30,7 @@ class NotificacionController extends Controller
         $usuarios = User::all();
 
         return view('notificacion.create', [
-            
+
         ]);
     }
 
@@ -79,7 +79,7 @@ class NotificacionController extends Controller
         }
 
         // Obtener usuarios para editar la notificación
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
 
         return view('notificacion.edit', [
             'notificacion' => $notificacion,

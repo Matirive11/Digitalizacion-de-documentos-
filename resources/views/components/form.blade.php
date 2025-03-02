@@ -102,12 +102,28 @@
         }
 
         nextButton.addEventListener('click', () => {
-            if (currentSectionIndex < formSections.length - 1) {
-                currentSectionIndex++;
-                showSection(currentSectionIndex);
-                updateProgress();
+        const currentSection = document.getElementById(formSections[currentSectionIndex]);
+        const inputs = currentSection.querySelectorAll('input[required], select[required]');
+
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('border-red-500'); // Resaltar en rojo
+                isValid = false;
+            } else {
+                input.classList.remove('border-red-500');
             }
         });
+
+        if (isValid) {
+            currentSectionIndex++;
+            showSection(currentSectionIndex);
+            updateProgress();
+        } else {
+            alert("Por favor, completa todos los campos obligatorios antes de continuar.");
+        }
+    });
 
         backButton.addEventListener('click', () => {
             if (currentSectionIndex > 0) {
@@ -116,7 +132,9 @@
                 updateProgress();
             }
         });
-
+        submitButton.addEventListener('click', (event) => {
+            console.log("Formulario enviado"); // Verifica si se ejecuta al hacer clic
+        });
         // Inicializar la primera sección y la barra de progreso
         showSection(currentSectionIndex);
         updateProgress();

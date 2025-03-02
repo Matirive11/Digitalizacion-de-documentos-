@@ -9,55 +9,55 @@
                 <!-- Apellido y Nombres -->
                 <div class="flex gap-4 mb-4">
                     <div class="flex-1">
-                        <x-input-label for="last_name" :value="__('Apellido')" />
-                        <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" required />
+                        <x-input-label for="apellido" :value="__('Apellido')" />
+                        <x-text-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" required />
                     </div>
                     <div class="flex-1">
-                        <x-input-label for="first_name" :value="__('Nombres')" />
-                        <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" required />
+                        <x-input-label for="nombre" :value="__('Nombres')" />
+                        <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" required />
                     </div>
                 </div>
                 <!-- Otros campos de la sección 1 (continúa tu formulario aquí) -->
                 <!-- Fecha de Nacimiento y Edad -->
         <div class="flex gap-4 mb-4">
             <div class="flex-1">
-                <x-input-label for="birth_date" :value="__('Fecha de nacimiento')" />
-                <x-text-input id="birth_date" class="block mt-1 w-full" type="date" name="birth_date" required />
+                <x-input-label for="fecha_nacimiento" :value="__('Fecha de nacimiento')" />
+                <x-text-input id="fecha_nacimiento" class="block mt-1 w-full" type="date" name="fecha_nacimiento" required />
             </div>
             <div class="flex-1">
-                <x-input-label for="age" :value="__('Edad')" />
-                <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" required />
+                <x-input-label for="edad" :value="__('Edad')" />
+                <x-text-input id="edad" class="block mt-1 w-full" type="number" name="edad" required />
             </div>
         </div>
 
         <!-- Lugar de nacimiento, Provincia y País -->
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
-                <x-input-label for="birth_place" :value="__('Lugar de nacimiento')" />
-                <x-text-input id="birth_place" class="block mt-1 w-full" type="text" name="birth_place" required />
+                <x-input-label for="lugar_nacimiento" :value="__('Lugar de nacimiento')" />
+                <x-text-input id="lugar_nacimiento" class="block mt-1 w-full" type="text" name="lugar_nacimiento" required />
             </div>
             <div>
-                <x-input-label for="province" :value="__('Provincia')" />
-                <x-text-input id="province" class="block mt-1 w-full" type="text" name="province" required />
+                <x-input-label for="provincia_nacimiento" :value="__('Provincia')" />
+                <x-text-input id="provincia_nacimiento" class="block mt-1 w-full" type="text" name="provincia_nacimiento" required />
             </div>
             <div>
-                <x-input-label for="country" :value="__('País')" />
-                <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" required />
+                <x-input-label for="pais_nacimiento" :value="__('País')" />
+                <x-text-input id="pais_nacimiento" class="block mt-1 w-full" type="text" name="pais_nacimiento" required />
             </div>
         </div>
 
         <!-- Documento tipo y Número -->
         <div class="flex gap-4 mb-4">
             <div>
-                <x-input-label for="document_type" :value="__('Documento tipo')" />
-                <select id="document_type" name="document_type" class="block mt-1 w-full">
+                <x-input-label for="tipo_documento" :value="__('Documento tipo')" />
+                <select id="tipo_documento" name="tipo_documento" class="block mt-1 w-full">
                     <option value="passport">Pasaporte</option>
                     <option value="dni">DNI</option>
                 </select>
             </div>
             <div>
-                <x-input-label for="document_number" :value="__('Nº')" />
-                <x-text-input id="document_number" class="block mt-1 w-full" type="text" name="document_number" required />
+                <x-input-label for="documento" :value="__('Nº')" />
+                <x-text-input id="documento" class="block mt-1 w-full" type="text" name="documento" required />
             </div>
         </div>
 
@@ -66,48 +66,48 @@
             <x-input-label :value="__('Sexo')" />
             <div class="flex items-center gap-4 mt-1">
                 <label class="flex items-center">
-                    <input type="radio" name="gender" value="M" class="mr-2"> M
+                    <input type="radio" name="genero" value="M" class="mr-2"> M
                 </label>
                 <label class="flex items-center">
-                    <input type="radio" name="gender" value="F" class="mr-2"> F
+                    <input type="radio" name="genero" value="F" class="mr-2"> F
                 </label>
             </div>
         </div>
 
         <!-- Domicilio -->
         <div class="mb-4">
-            <x-input-label for="address" :value="__('Domicilio Calle')" />
-            <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" required />
+            <x-input-label for="direccion" :value="__('Domicilio Calle')" />
+            <x-text-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" required />
         </div>
 
         <!-- Teléfonos y Correo Electrónico -->
         <div class="flex gap-4 mb-4">
             <div class="flex-1">
-                <x-input-label for="phone" :value="__('Teléfono fijo')" />
-                <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" required />
+                <x-input-label for="telefono_fijo" :value="__('Teléfono fijo')" />
+                <x-text-input id="telefono_fijo" class="block mt-1 w-full" type="text" name="telefono_fijo" required />
             </div>
             <div class="flex-1">
-                <x-input-label for="cellphone" :value="__('Teléfono celular')" />
-                <x-text-input id="cellphone" class="block mt-1 w-full" type="text" name="cellphone" required />
+                <x-input-label for="numero_telefono" :value="__('Teléfono celular')" />
+                <x-text-input id="numero_telefono" class="block mt-1 w-full" type="text" name="numero_telefono" required />
             </div>
         </div>
                <!-- Código Postal, Localidad, Provincia, País -->
                <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="postal_code" :value="__('CP')" />
-                    <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" required />
+                    <x-input-label for="codigo_postal" :value="__('CP')" />
+                    <x-text-input id="codigo_postal" class="block mt-1 w-full" type="text" name="codigo_postal" required />
                 </div>
                 <div>
-                    <x-input-label for="locality" :value="__('Localidad')" />
-                    <x-text-input id="locality" class="block mt-1 w-full" type="text" name="locality" required />
+                    <x-input-label for="ciudad" :value="__('Localidad')" />
+                    <x-text-input id="ciudad" class="block mt-1 w-full" type="text" name="ciudad" required />
                 </div>
                 <div>
-                    <x-input-label for="province" :value="__('Provincia')" />
-                    <x-text-input id="province" class="block mt-1 w-full" type="text" name="province" required />
+                    <x-input-label for="provincia" :value="__('Provincia')" />
+                    <x-text-input id="provincia" class="block mt-1 w-full" type="text" name="provincia" required />
                 </div>
                 <div>
-                    <x-input-label for="country" :value="__('País')" />
-                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" required />
+                    <x-input-label for="pais" :value="__('País')" />
+                    <x-text-input id="pais" class="block mt-1 w-full" type="text" name="pais" required />
                 </div>
             </div>
         <!-- Correo Electrónico -->
@@ -126,10 +126,10 @@
                 <x-input-label :value="__('¿Es Adventista del 7mo Día?')" />
                 <div class="flex items-center gap-4 mt-1">
                     <label class="flex items-center">
-                        <input type="radio" name="adventist" value="yes" class="mr-2"> Sí
+                        <input type="radio" name="adventista" value="yes" class="mr-2"> Sí
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="adventist" value="no" class="mr-2"> No
+                        <input type="radio" name="adventista" value="no" class="mr-2"> No
                     </label>
                 </div>
             </div>
@@ -137,18 +137,18 @@
                 <x-input-label :value="__('¿Está bautizado?')" />
                 <div class="flex items-center gap-4 mt-1">
                     <label class="flex items-center">
-                        <input type="radio" name="baptized" value="yes" class="mr-2"> Sí
+                        <input type="radio" name="bautizado" value="yes" class="mr-2"> Sí
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="baptized" value="no" class="mr-2"> No
+                        <input type="radio" name="bautizado" value="no" class="mr-2"> No
                     </label>
                 </div>
             </div>
         </div>
     <!-- Iglesia a la que asiste -->
     <div class="mb-4">
-        <x-input-label for="church" :value="__('¿A qué iglesia asiste?')" />
-        <x-text-input id="church" class="block mt-1 w-full" type="text" name="church" required />
+        <x-input-label for="iglesia" :value="__('¿A qué iglesia asiste?')" />
+        <x-text-input id="iglesia" class="block mt-1 w-full" type="text" name="iglesia" required />
     </div>
 
     <!-- Estado Civil -->
@@ -156,19 +156,19 @@
         <x-input-label :value="__('Estado civil')" />
         <div class="flex items-center gap-4 mt-1">
             <label class="flex items-center">
-                <input type="radio" name="marital_status" value="single" class="mr-2"> Soltero
+                <input type="radio" name="estado_civil" value="single" class="mr-2"> Soltero
             </label>
             <label class="flex items-center">
-                <input type="radio" name="marital_status" value="married" class="mr-2"> Casado
+                <input type="radio" name="estado_civil" value="married" class="mr-2"> Casado
             </label>
             <label class="flex items-center">
-                <input type="radio" name="marital_status" value="widowed" class="mr-2"> Viudo
+                <input type="radio" name="estado_civil" value="widowed" class="mr-2"> Viudo
             </label>
             <label class="flex items-center">
-                <input type="radio" name="marital_status" value="divorced" class="mr-2"> Divorciado
+                <input type="radio" name="estado_civil" value="divorced" class="mr-2"> Divorciado
             </label>
             <label class="flex items-center">
-                <input type="radio" name="marital_status" value="separated" class="mr-2"> Separado
+                <input type="radio" name="estado_civil" value="separated" class="mr-2"> Separado
             </label>
         </div>
     </div>
@@ -178,12 +178,7 @@
         <x-input-label for="cuil" :value="__('N° de CUIL')" />
         <x-text-input id="cuil" class="block mt-1 w-full" type="text" name="cuil" required />
     </div>
-                <!-- Botón para cambiar a la Sección 2 -->
-                <div class="text-center mt-6">
-                    <x-primary-button @click="currentSection = 2">
-                        {{ __('Confirmar y Continuar') }}
-                    </x-primary-button>
-                </div>
+
             </x-slot>
         </div>
 
@@ -198,40 +193,37 @@
                         <!-- Opciones de carrera -->
                         <div class="radio-group">
                             <label>CARRERA</label>
-                            <label><input type="radio" name="carrera" value="educacion_inicial"> Profesorado de Educación Inicial</label>
-                            <label><input type="radio" name="carrera" value="educacion_primaria"> Profesorado de Educación Primaria</label>
-                            <label><input type="radio" name="carrera" value="educacion_matematica"> Profesorado de Educación Secundaria en Matemática</label>
-                            <label><input type="radio" name="carrera" value="musica"> Profesorado de Música</label>
-                            <label><input type="radio" name="carrera" value="analista_sistemas"> Técnico Superior Analista de Sistemas</label>
-                            <label><input type="radio" name="carrera" value="contable"> Técnico Superior Contable Administrativo</label>
-                            <label><input type="radio" name="carrera" value="enfermeria"> Técnico Superior en Enfermería</label>
+                            <label><input type="radio" name="carrera_interes" value="educacion_inicial"> Profesorado de Educación Inicial</label>
+                            <label><input type="radio" name="carrera_interes" value="educacion_primaria"> Profesorado de Educación Primaria</label>
+                            <label><input type="radio" name="carrera_interes" value="educacion_matematica"> Profesorado de Educación Secundaria en Matemática</label>
+                            <label><input type="radio" name="carrera_interes" value="musica"> Profesorado de Música</label>
+                            <label><input type="radio" name="carrera_interes" value="analista_sistemas"> Técnico Superior Analista de Sistemas</label>
+                            <label><input type="radio" name="carrera_interes" value="contable"> Técnico Superior Contable Administrativo</label>
+                            <label><input type="radio" name="carrera_interes" value="enfermeria"> Técnico Superior en Enfermería</label>
                         </div>
 
                         <!-- Año de estudio -->
-                        <div class="checkbox-group">
-                            <label>AÑO</label>
-                            <label><input type="checkbox" name="año" value="1"> 1° AÑO</label>
-                            <label><input type="checkbox" name="año" value="2"> 2° AÑO</label>
-                            <label><input type="checkbox" name="año" value="3"> 3° AÑO</label>
-                            <label><input type="checkbox" name="año" value="4"> 4° AÑO</label>
-                        </div>
+                        <select name="anio_estudio">
+                            <option value="1">1° Año</option>
+                            <option value="2">2° Año</option>
+                            <option value="3">3° Año</option>
+                            <option value="4">4° Año</option>
+                          </select>
+
 
                         <!-- Nivel de educación secundaria -->
-                        <div class="checkbox-group">
-                            <label>NIVEL DE SECUNDARIO</label>
-                            <label><input type="checkbox" name="secundario_completo" value="completo"> Nivel Secundario completo</label>
-                            <label><input type="checkbox" name="secundario_proceso" value="proceso"> Nivel Secundario en proceso</label>
-                            <label><input type="checkbox" name="secundario_incompleto" value="incompleto"> Nivel Secundario incompleto (Solicitar Protocolo de Admisión para mayores)</label>
+                        <div class="form-group">
+                            <label for="nivel_secundario">NIVEL DE SECUNDARIO</label>
+                            <select name="nivel_secundario" id="nivel_secundario" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                <option value="completo">Nivel Secundario completo</option>
+                                <option value="proceso">Nivel Secundario en proceso</option>
+                                <option value="incompleto">Nivel Secundario incompleto (Solicitar Protocolo de Admisión para mayores)</option>
+                            </select>
                         </div>
 
-                    <!-- Botón para cambiar a la Sección 3 -->
-                <div class="text-center mt-6">
-                    <x-primary-button @click="currentSection = 3">
-                        {{ __('Confirmar y Continuar') }}
-                    </x-primary-button>
 
-                    </div>
-                </div>
+
             </x-slot>
         </div>
         </div>
@@ -304,13 +296,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Botón para continuar -->
-                    <div class="text-center mt-6">
-                        <x-primary-button @click="currentSection = 4">
-                            {{ __('Confirmar y Continuar') }}
-                        </x-primary-button>
-                    </div>
                 </div>
             </x-slot>
         </div>
@@ -335,26 +320,19 @@
                 <!-- Opciones de hospedaje -->
                 <div class="mb-4">
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="beca_parcial" value="yes">
                         Solicito inscribirme al programa de formacion profesional a contra turno del cursado de clases(plan de Beca parcial)
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="beca_total" value="yes">
                         Solicito inscribirme al programa de formacion profesional durante todo el año (Beca total)
                     </label>
                 </div>
                 <label>
-                    <input type="checkbox" name="Becas" value="yes">
+                    <input type="checkbox" name="prestamo_honor" value="yes">
                     Préstamo de honor
                 </label>
-
-                <!-- Botón para continuar -->
-                <div class="text-center mt-6">
-                    <x-primary-button @click="currentSection = 5">
-                        {{ __('Confirmar y Continuar') }}
-                    </x-primary-button>
-                </div>
             </div>
         </x-slot>
         </div>
@@ -370,58 +348,51 @@
                 <!-- Opciones -->
                 <div class="mb-4">
                     <label>
-                        <input type="checkbox" name="datos" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                              Alumno promotor
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                              Iglesia
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                             Familiares
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                             Amigos
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                             Folleto
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                             Instituto Adventista
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" name="Becas" value="yes">
+                        <input type="checkbox" name="como_supo_isam" value="yes">
                             Otro
                     </label>
                     <br>
                     <div class="p-4 bg-gray-100 border border-gray-400 mb-4">
                         Si quien le informo es un alumno del nivel superior del ISAM por favor denos el nombre y apellido
                     </div>
-                    <x-input-label for="nombre_apellido" :value="__('Nombre y Apellido')" />
-                    <x-text-input id="nombre_apellido" class="block mt-1 w-full" type="text" name="nombre_apellido" />
+                    <x-input-label for="nombre_recomendado" :value="__('Nombre y Apellido')" />
+                    <x-text-input id="nombre_recomendado" class="block mt-1 w-full" type="text" name="nombre_recomendado" />
 
                     <div class="p-4 bg-gray-100 border border-gray-400 mb-4">
                         ¿Cuales son las razones por las que eligió el ISAM para estudiar?
                     </div>
-                    <label for="descripcion">Razón:</label>
-                    <input type="text" name="descripcion" id="descripcion">
-
-                <!-- Botón para continuar en la sección 6 -->
-                <div class="text-center mt-6">
-                <x-primary-button @click="currentSection = 6">
-                    {{ __('Confirmar y Continuar') }}
-                </x-primary-button>
-                </div>
+                    <label for="razon_estudio">Razón:</label>
+                    <input type="text" name="razon_estudio" id="razon_estudio">
 
                 </div>
             </div>
@@ -436,63 +407,59 @@
             <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
             <h2>SALUD DEL SOLICITANTE</h2>
             <div class="form-group">
-                <label for="blood_type">Grupo Sanguíneo</label>
-                <input type="text" class="form-control" id="blood_type" name="blood_type" placeholder="Grupo Sanguíneo" required>
+                <label for="grupo_sanguineo">Grupo Sanguíneo</label>
+                <input type="text" class="form-control" id="grupo_sanguineo" name="grupo_sanguineo" placeholder="Grupo Sanguíneo" required>
             </div>
             <div class="form-group">
-                <label for="rh_factor">Factor RH</label>
-                <input type="text" class="form-control" id="rh_factor" name="rh_factor" placeholder="Factor RH" required>
+                <label for="factor_rh">Factor RH</label>
+                <input type="text" class="form-control" id="factor_rh" name="factor_rh" placeholder="Factor RH" required>
             </div>
             <div class="form-group">
                 <label>¿Tiene algún problema de salud?</label>
                 <div>
-                    <label><input type="radio" name="health_problem" value="1"> Sí</label>
-                    <label><input type="radio" name="health_problem" value="0"> No</label>
+                    <label><input type="radio" name="problema_salud" value="1"> Sí</label>
+                    <label><input type="radio" name="problema_salud" value="0"> No</label>
                 </div>
-                <input type="text" class="form-control" name="health_problem_description" placeholder="¿Cuál?">
+                <input type="text" class="form-control" name="detalle_problema_salud" placeholder="¿Cuál?">
             </div>
             <div class="form-group">
                 <label>¿Tiene algún problema que le impida realizar actividad física o manual?</label>
                 <div>
-                    <label><input type="radio" name="physical_limitation" value="1"> Sí</label>
-                    <label><input type="radio" name="physical_limitation" value="0"> No</label>
+                    <label><input type="radio" name="limitacion_fisica" value="1"> Sí</label>
+                    <label><input type="radio" name="limitacion_fisica" value="0"> No</label>
                 </div>
-                <input type="text" class="form-control" name="physical_limitation_description" placeholder="¿Cuál?">
+                <input type="text" class="form-control" name="detalle_limitacion_fisica" placeholder="¿Cuál?">
             </div>
             <div class="form-group">
                 <label>¿Está bajo tratamiento médico?</label>
-                <input type="text" class="form-control" name="medical_treatment_description" placeholder="¿Cuál?">
+                <input type="text" class="form-control" name="tratamiento_medico" placeholder="¿Cuál?">
             </div>
             <div class="form-group">
                 <label>Tiene obra social</label>
-                <input type="text" class="form-control" name="social_security_description" placeholder="¿Cuál?">
+                <input type="text" class="form-control" name="obra_social" placeholder="¿Cuál?">
             </div>
             <div class="form-group">
                 <label>N° de afiliado</label>
-                <input type="text" class="form-control" name="affiliate_number" placeholder="Numero">
+                <input type="text" class="form-control" name="nro_afiliado" placeholder="Numero">
             </div>
             <div class="form-group">
                 <label>¿Estoy recibiendo o recibí tratamiento de rehabilitación por consumo de sustancias adictivas?</label>
                 <div>
-                    <label><input type="radio" name="substance_treatment" value="Nunca"> Nunca</label><br>
-                    <label><input type="radio" name="substance_treatment" value="No en el último año"> No en el último año</label><br>
-                    <label><input type="radio" name="substance_treatment" value="Alguna vez este año"> Alguna vez este año</label>
+                    <label><input type="radio" name="rehabilitacion_sustancias" value="Nunca"> Nunca</label><br>
+                    <label><input type="radio" name="rehabilitacion_sustancias" value="No en el último año"> No en el último año</label><br>
+                    <label><input type="radio" name="rehabilitacion_sustancias" value="Alguna vez este año"> Alguna vez este año</label>
                 </div>
             </div>
             <div class="form-group">
                 <label>¿Estoy recibiendo o recibí tratamiento psicológico?</label>
                 <div>
-                    <label><input type="radio" name="psychological_treatment" value="Nunca"> Nunca</label><br>
-                    <label><input type="radio" name="psychological_treatment" value="No en el último año"> No en el último año</label><br>
-                    <label><input type="radio" name="psychological_treatment" value="Alguna vez este año"> Alguna vez este año</label>
+                    <label><input type="radio" name="tratamiento_psicologico" value="Nunca"> Nunca</label><br>
+                    <label><input type="radio" name="tratamiento_psicologico" value="No en el último año"> No en el último año</label><br>
+                    <label><input type="radio" name="tratamiento_psicologico" value="Alguna vez este año"> Alguna vez este año</label>
                 </div>
             </div>
             <!-- Botón para continuar en la sección 7 -->
-            <div class="text-center mt-6">
-                <x-primary-button @click="currentSection = 7">
-                    {{ __('Confirmar y Continuar') }}
-                </x-primary-button>
-            </div>
+
         </div>
     </x-slot>
 </div>
@@ -507,79 +474,79 @@
             <h2>PADRE</h2>
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="last_name" :value="__('Apellido')" />
-                    <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" required />
+                    <x-input-label for="padre_apellido" :value="__('Apellido')" />
+                    <x-text-input id="padre_apellido" class="block mt-1 w-full" type="text" name="padre_apellido" required />
                 </div>
                 <div class="flex-1">
-                    <x-input-label for="first_name" :value="__('Nombres')" />
-                    <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" required />
+                    <x-input-label for="padre_nombre" :value="__('Nombres')" />
+                    <x-text-input id="padre_nombre" class="block mt-1 w-full" type="text" name="padre_nombre" required />
                 </div>
             </div>
 
             <!-- Domicilio -->
             <div class="mb-4">
-                <x-input-label for="address" :value="__('Dirección')" />
-                <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" required />
+                <x-input-label for="padre_direccion" :value="__('Dirección')" />
+                <x-text-input id="padre_direccion" class="block mt-1 w-full" type="text" name="padre_direccion" required />
             </div>
 
             <!-- Código Postal, Localidad, Provincia, País -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="postal_code" :value="__('CP')" />
-                    <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" required />
+                    <x-input-label for="padre_cp" :value="__('CP')" />
+                    <x-text-input id="padre_cp" class="block mt-1 w-full" type="text" name="padre_cp" required />
                 </div>
                 <div>
-                    <x-input-label for="locality" :value="__('Localidad')" />
-                    <x-text-input id="locality" class="block mt-1 w-full" type="text" name="locality" required />
+                    <x-input-label for="padre_localidad" :value="__('Localidad')" />
+                    <x-text-input id="padre_localidad" class="block mt-1 w-full" type="text" name="padre_localidad" required />
                 </div>
                 <div>
-                    <x-input-label for="province" :value="__('Provincia')" />
-                    <x-text-input id="province" class="block mt-1 w-full" type="text" name="province" required />
+                    <x-input-label for="padre_provincia" :value="__('Provincia')" />
+                    <x-text-input id="padre_provincia" class="block mt-1 w-full" type="text" name="padre_provincia" required />
                 </div>
                 <div>
-                    <x-input-label for="country" :value="__('País')" />
-                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" required />
+                    <x-input-label for="padre_pais" :value="__('País')" />
+                    <x-text-input id="padre_pais" class="block mt-1 w-full" type="text" name="padre_pais" required />
                 </div>
             </div>
 
             <!-- Teléfonos y Correo Electrónico -->
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="cellphone" :value="__('Teléfono celular')" />
-                    <x-text-input id="cellphone" class="block mt-1 w-full" type="text" name="cellphone" required />
+                    <x-input-label for="padre_telefono" :value="__('Teléfono celular')" />
+                    <x-text-input id="padre_telefono" class="block mt-1 w-full" type="text" name="padre_telefono" required />
                 </div>
             </div>
 
             <!-- Correo Electrónico -->
             <div class="mb-4">
-                <x-input-label for="email" :value="__('Correo electrónico')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required />
+                <x-input-label for="padre_email" :value="__('Correo electrónico')" />
+                <x-text-input id="padre_email" class="block mt-1 w-full" type="email" name="padre_email" required />
             </div>
 
             <!-- Documento tipo y Número -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="document_type" :value="__('Tipo de Documento')" />
-                    <select id="document_type" name="document_type" class="block mt-1 w-full">
+                    <x-input-label for="padre_tipo_documento" :value="__('Tipo de Documento')" />
+                    <select id="padre_tipo_documento" name="padre_tipo_documento" class="block mt-1 w-full">
                         <option value="passport">Pasaporte</option>
                         <option value="dni">DNI</option>
                     </select>
                 </div>
                 <div>
-                    <x-input-label for="document_number" :value="__('Nº')" />
-                    <x-text-input id="document_number" class="block mt-1 w-full" type="text" name="document_number" required />
+                    <x-input-label for="padre_documento" :value="__('Nº')" />
+                    <x-text-input id="padre_documento" class="block mt-1 w-full" type="text" name="padre_documento" required />
                 </div>
             </div>
 
             <!-- Edad y Ocupación -->
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <x-input-label for="age" :value="__('Edad')" />
-                    <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" required />
+                    <x-input-label for="padre_edad" :value="__('Edad')" />
+                    <x-text-input id="padre_edad" class="block mt-1 w-full" type="number" name="padre_edad" required />
                 </div>
                 <div>
-                    <x-input-label for="occupation" :value="__('Ocupación')" />
-                    <x-text-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" required />
+                    <x-input-label for="padre_ocupacion" :value="__('Ocupación')" />
+                    <x-text-input id="padre_ocupacion" class="block mt-1 w-full" type="text" name="padre_ocupacion" required />
                 </div>
             </div>
 
@@ -587,87 +554,80 @@
             <h2>MADRE</h2>
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="last_name" :value="__('Apellido')" />
-                    <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" required />
+                    <x-input-label for="madre_apellido" :value="__('Apellido')" />
+                    <x-text-input id="madre_apellido" class="block mt-1 w-full" type="text" name="madre_apellido" required />
                 </div>
                 <div class="flex-1">
-                    <x-input-label for="first_name" :value="__('Nombres')" />
-                    <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" required />
+                    <x-input-label for="madre_nombre" :value="__('Nombres')" />
+                    <x-text-input id="madre_nombre" class="block mt-1 w-full" type="text" name="madre_nombre" required />
                 </div>
             </div>
 
             <!-- Domicilio -->
             <div class="mb-4">
-                <x-input-label for="address" :value="__('Dirección')" />
-                <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" required />
+                <x-input-label for="madre_direccion" :value="__('Dirección')" />
+                <x-text-input id="madre_direccion" class="block mt-1 w-full" type="text" name="madre_direccion" required />
             </div>
 
             <!-- Código Postal, Localidad, Provincia, País -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="postal_code" :value="__('CP')" />
-                    <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" required />
+                    <x-input-label for="madre_cp" :value="__('CP')" />
+                    <x-text-input id="madre_cp" class="block mt-1 w-full" type="text" name="madre_cp" required />
                 </div>
                 <div>
-                    <x-input-label for="locality" :value="__('Localidad')" />
-                    <x-text-input id="locality" class="block mt-1 w-full" type="text" name="locality" required />
+                    <x-input-label for="madre_localidad" :value="__('Localidad')" />
+                    <x-text-input id="madre_localidad" class="block mt-1 w-full" type="text" name="madre_localidad" required />
                 </div>
                 <div>
-                    <x-input-label for="province" :value="__('Provincia')" />
-                    <x-text-input id="province" class="block mt-1 w-full" type="text" name="province" required />
+                    <x-input-label for="madre_provincia" :value="__('Provincia')" />
+                    <x-text-input id="madre_provincia" class="block mt-1 w-full" type="text" name="madre_provincia" required />
                 </div>
                 <div>
-                    <x-input-label for="country" :value="__('País')" />
-                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" required />
+                    <x-input-label for="madre_pais" :value="__('País')" />
+                    <x-text-input id="madre_pais" class="block mt-1 w-full" type="text" name="madre_pais" required />
                 </div>
             </div>
 
             <!-- Teléfonos y Correo Electrónico -->
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="cellphone" :value="__('Teléfono celular')" />
-                    <x-text-input id="cellphone" class="block mt-1 w-full" type="text" name="cellphone" required />
+                    <x-input-label for="madre_telefono" :value="__('Teléfono celular')" />
+                    <x-text-input id="madre_telefono" class="block mt-1 w-full" type="text" name="madre_telefono" required />
                 </div>
             </div>
 
             <!-- Correo Electrónico -->
             <div class="mb-4">
-                <x-input-label for="email" :value="__('Correo electrónico')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required />
+                <x-input-label for="madre_email" :value="__('Correo electrónico')" />
+                <x-text-input id="madre_email" class="block mt-1 w-full" type="email" name="madre_email" required />
             </div>
 
             <!-- Documento tipo y Número -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="document_type" :value="__('Tipo de Documento')" />
-                    <select id="document_type" name="document_type" class="block mt-1 w-full">
+                    <x-input-label for="madre_tipo_documento" :value="__('Tipo de Documento')" />
+                    <select id="madre_tipo_documento" name="madre_tipo_documento" class="block mt-1 w-full">
                         <option value="passport">Pasaporte</option>
                         <option value="dni">DNI</option>
                     </select>
                 </div>
                 <div>
-                    <x-input-label for="document_number" :value="__('Nº')" />
-                    <x-text-input id="document_number" class="block mt-1 w-full" type="text" name="document_number" required />
+                    <x-input-label for="madre_documento" :value="__('Nº')" />
+                    <x-text-input id="madre_documento" class="block mt-1 w-full" type="text" name="madre_documento" required />
                 </div>
             </div>
 
             <!-- Edad y Ocupación -->
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <x-input-label for="age" :value="__('Edad')" />
-                    <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" required />
+                    <x-input-label for="madre_edad" :value="__('Edad')" />
+                    <x-text-input id="madre_edad" class="block mt-1 w-full" type="number" name="madre_edad" required />
                 </div>
                 <div>
-                    <x-input-label for="occupation" :value="__('Ocupación')" />
-                    <x-text-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" required />
+                    <x-input-label for="madre_ocupacion" :value="__('Ocupación')" />
+                    <x-text-input id="madre_ocupacion" class="block mt-1 w-full" type="text" name="madre_ocupacion" required />
                 </div>
-            </div>
-
-            <!-- Botón para continuar a la siguiente sección -->
-            <div class="text-center mt-6">
-                <x-primary-button @click="currentSection = 8">
-                    {{ __('Confirmar y Continuar') }}
-                </x-primary-button>
             </div>
         </div>
     </x-slot>
@@ -681,87 +641,80 @@
             <h2>RESPONSABLE FINANCIERO</h2>
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="last_name" :value="__('Apellido')" />
-                    <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" required />
+                    <x-input-label for="resp_financiero_apellido" :value="__('Apellido')" />
+                    <x-text-input id="resp_financiero_apellido" class="block mt-1 w-full" type="text" name="resp_financiero_apellido" required />
                 </div>
                 <div class="flex-1">
-                    <x-input-label for="first_name" :value="__('Nombres')" />
-                    <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" required />
+                    <x-input-label for="resp_financiero_nombre" :value="__('Nombres')" />
+                    <x-text-input id="resp_financiero_nombre" class="block mt-1 w-full" type="text" name="resp_financiero_nombre" required />
                 </div>
             </div>
 
             <!-- Domicilio -->
             <div class="mb-4">
-                <x-input-label for="address" :value="__('Dirección')" />
-                <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" required />
+                <x-input-label for="resp_financiero_direccion" :value="__('Dirección')" />
+                <x-text-input id="resp_financiero_direccion" class="block mt-1 w-full" type="text" name="resp_financiero_direccion" required />
             </div>
 
             <!-- Código Postal, Localidad, Provincia, País -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="postal_code" :value="__('CP')" />
-                    <x-text-input id="postal_code" class="block mt-1 w-full" type="text" name="postal_code" required />
+                    <x-input-label for="resp_financiero_cp" :value="__('CP')" />
+                    <x-text-input id="resp_financiero_cp" class="block mt-1 w-full" type="text" name="resp_financiero_cp" required />
                 </div>
                 <div>
-                    <x-input-label for="locality" :value="__('Localidad')" />
-                    <x-text-input id="locality" class="block mt-1 w-full" type="text" name="locality" required />
+                    <x-input-label for="resp_financiero_localidad" :value="__('Localidad')" />
+                    <x-text-input id="resp_financiero_localidad" class="block mt-1 w-full" type="text" name="resp_financiero_localidad" required />
                 </div>
                 <div>
-                    <x-input-label for="province" :value="__('Provincia')" />
-                    <x-text-input id="province" class="block mt-1 w-full" type="text" name="province" required />
+                    <x-input-label for="resp_financiero_provincia" :value="__('Provincia')" />
+                    <x-text-input id="resp_financiero_provincia" class="block mt-1 w-full" type="text" name="resp_financiero_provincia" required />
                 </div>
                 <div>
-                    <x-input-label for="country" :value="__('País')" />
-                    <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" required />
+                    <x-input-label for="resp_financiero_pais" :value="__('País')" />
+                    <x-text-input id="resp_financiero_pais" class="block mt-1 w-full" type="text" name="resp_financiero_pais" required />
                 </div>
             </div>
 
             <!-- Teléfonos y Correo Electrónico -->
             <div class="flex gap-4 mb-4">
                 <div class="flex-1">
-                    <x-input-label for="cellphone" :value="__('Teléfono celular')" />
-                    <x-text-input id="cellphone" class="block mt-1 w-full" type="text" name="cellphone" required />
+                    <x-input-label for="resp_financiero_telefono" :value="__('Teléfono celular')" />
+                    <x-text-input id="resp_financiero_telefono" class="block mt-1 w-full" type="text" name="resp_financiero_telefono" required />
                 </div>
             </div>
 
             <!-- Correo Electrónico -->
             <div class="mb-4">
-                <x-input-label for="email" :value="__('Correo electrónico')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required />
+                <x-input-label for="resp_financiero_email" :value="__('Correo electrónico')" />
+                <x-text-input id="resp_financiero_email" class="block mt-1 w-full" type="email" name="resp_financiero_email" required />
             </div>
 
             <!-- Documento tipo y Número -->
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div>
-                    <x-input-label for="document_type" :value="__('Tipo de Documento')" />
-                    <select id="document_type" name="document_type" class="block mt-1 w-full">
-                        <option value="passport">Pasaporte</option>
-                        <option value="dni">DNI</option>
+                    <x-input-label for="resp_financiero_tipo_documento" :value="__('Tipo de Documento')" />
+                    <select id="resp_financiero_tipo_documento" name="resp_financiero_tipo_documento" class="block mt-1 w-full">
+                        <option value="Pasaporte">Pasaporte</option>
+                        <option value="DNI">DNI</option>
                     </select>
                 </div>
                 <div>
-                    <x-input-label for="document_number" :value="__('Nº')" />
-                    <x-text-input id="document_number" class="block mt-1 w-full" type="text" name="document_number" required />
+                    <x-input-label for="resp_financiero_documento" :value="__('Nº')" />
+                    <x-text-input id="resp_financiero_documento" class="block mt-1 w-full" type="text" name="resp_financiero_documento" required />
                 </div>
             </div>
 
             <!-- Edad y Ocupación -->
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <x-input-label for="age" :value="__('Edad')" />
-                    <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" required />
+                    <x-input-label for="resp_financiero_edad" :value="__('Edad')" />
+                    <x-text-input id="resp_financiero_edad" class="block mt-1 w-full" type="number" name="resp_financiero_edad" required />
                 </div>
                 <div>
-                    <x-input-label for="occupation" :value="__('Ocupación')" />
-                    <x-text-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" required />
+                    <x-input-label for="resp_financiero_ocupacion" :value="__('Ocupación')" />
+                    <x-text-input id="resp_financiero_ocupacion" class="block mt-1 w-full" type="text" name="resp_financiero_ocupacion" required />
                 </div>
-            </div>
-
-            <!-- Botón de Enviar -->
-            <div class="text-center mt-6">
-                <x-primary-button type="submit">
-                    {{ __('Enviar Formulario') }}
-                </x-primary-button>
             </div>
         </div>
     </x-slot>
