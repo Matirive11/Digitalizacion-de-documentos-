@@ -28,7 +28,7 @@
         </div>
 
         <!-- Contenido Dinámico del Formulario -->
-        <form id="form" method="POST" action="{{ route('matriculation.store') }}">
+        <form id="form" method="POST" action="{{ route('inscripciones.store') }}">
             @csrf
 
             <!-- Contenedor de Slots para las secciones del formulario -->
@@ -76,68 +76,201 @@
     </div>
 
     <!-- JavaScript para Controlar la Barra de Progreso y Navegación entre Secciones -->
-    <script>
-        const progressBar = document.getElementById('progress');
-        const nextButton = document.getElementById('nextButton');
-        const backButton = document.getElementById('backButton');
-        const submitButton = document.getElementById('submitButton');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    cargarProgreso(); // Cargar datos guardados al iniciar
 
-        const formSections = ["section1", "section2", "section3", "section4","section5", "section6", "section7", "section8"];
-        let currentSectionIndex = 0;
+    function guardarProgreso() {
+        let formData = {};
 
-        function updateProgress() {
-            const progressPercentage = ((currentSectionIndex + 1) / formSections.length) * 100;
-            progressBar.style.width = `${progressPercentage}%`;
-        }
+        // Capturar todos los tipos de campos (input, select, textarea)
+        document.querySelectorAll("#form input, #form select, #form textarea").forEach(input => {
+            if (input.type === "checkbox") {
+                // Guardar checkbox como true o false
+                formData[input.name] = input.checked;
+            } else if (input.type === "radio") {
+                // Guardar la opción seleccionada de un grupo de radio
+                if (input.checked) {
+                    formData[input.name] = input.value;
+                }
+            } else {
+                // Guardar input normales y selects
+                formData[input.name] = input.value;
+            }
+        });
 
-        function showSection(index) {
-            formSections.forEach((sectionId, i) => {
-                const section = document.getElementById(sectionId);
-                section.classList.toggle('hidden', i !== index);
+        // Guardar en LocalStorage
+        localStorage.setItem("formulario_admision", JSON.stringify(formData));
+        console.log("📝 Progreso guardado en LocalStorage.");
+    }
+
+    function cargarProgreso() {
+        let datosGuardados = localStorage.getItem("formulario_admision");
+
+        if (datosGuardados) {
+            let formData = JSON.parse(datosGuardados);
+
+            document.querySelectorAll("#form input, #form select, #form textarea").forEach(input => {
+                if (formData.hasOwnProperty(input.name)) {
+                    if (input.type === "checkbox") {
+                        // Restaurar checkbox
+                        input.checked = formData[input.name];
+                    } else if (input.type === "radio") {
+                        // Restaurar radio buttons
+                        if (input.value === formData[input.name]) {
+                            input.checked = true;
+                        }
+                    } else {
+                        // Restaurar inputs normales y selects
+                        input.value = formData[input.name];
+                    }
+                }
             });
 
-            backButton.classList.toggle('hidden', index === 0);
-            nextButton.classList.toggle('hidden', index === formSections.length - 1);
-            submitButton.classList.toggle('hidden', index !== formSections.length - 1);
+            console.log("📌 Progreso restaurado desde LocalStorage.");
         }
+    }
 
-        nextButton.addEventListener('click', () => {
-        const currentSection = document.getElementById(formSections[currentSectionIndex]);
-        const inputs = currentSection.querySelectorAll('input[required], select[required]');
+    // Detectar cambios y guardar en LocalStorage
+    document.querySelectorAll("#form input, #form select, #form textarea").forEach(input => {
+        input.addEventListener("change", guardarProgreso);
+        input.addEventListener("input", guardarProgreso);
+    });
 
-        let isValid = true;
+    // Borrar el progreso cuando el usuario envía el formulario
+    document.querySelector("#form").addEventListener("submit", function () {
+        localStorage.removeItem("formulario_admision");
+        console.log("✅ Datos eliminados de LocalStorage tras el envío.");
+    });
 
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                input.classList.add('border-red-500'); // Resaltar en rojo
+    // Botón opcional para borrar el progreso manualmente
+    document.getElementById("limpiarProgreso")?.addEventListener("click", function () {
+        localStorage.removeItem("formulario_admision");
+        document.querySelectorAll("#form input, #form select, #form textarea").forEach(input => {
+            if (input.type === "checkbox" || input.type === "radio") {
+                input.checked = false;
+            } else {
+                input.value = "";
+            }
+        });
+        alert("🗑️ El progreso del formulario ha sido eliminado.");
+    });
+});
+
+const progressBar = document.getElementById('progress');
+const nextButton = document.getElementById('nextButton');
+const backButton = document.getElementById('backButton');
+const submitButton = document.getElementById('submitButton');
+
+const formSections = ["section1", "section2", "section3", "section4", "section5", "section6", "section7", "section8"];
+let currentSectionIndex = 0;
+
+function updateProgress() {
+    const progressPercentage = ((currentSectionIndex + 1) / formSections.length) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+}
+
+function showSection(index) {
+    formSections.forEach((sectionId, i) => {
+        const section = document.getElementById(sectionId);
+        section.classList.toggle('hidden', i !== index);
+    });
+
+    backButton.classList.toggle('hidden', index === 0);
+    nextButton.classList.toggle('hidden', index === formSections.length - 1);
+    submitButton.classList.toggle('hidden', index !== formSections.length - 1);
+
+    console.log(`📌 Mostrando Sección: ${formSections[currentSectionIndex]}`);
+}
+
+function validarSeccionActual() {
+    // Obtener la sección actual basada en currentSectionIndex
+    const currentSectionId = formSections[currentSectionIndex];
+    const currentSection = document.getElementById(currentSectionId);
+    if (!currentSection) {
+        console.error(`❌ No se encontró la sección actual: ${currentSectionId}`);
+        return false;
+    }
+
+    // Filtrar solo los campos dentro de la sección actual
+    const inputs = currentSection.querySelectorAll('input[required], select[required]');
+
+    let isValid = true;
+
+    inputs.forEach(input => {
+        console.log(`🔍 Validando campo en ${currentSectionId}: ${input.name}, Valor: ${input.value}`);
+
+        if (input.type === "radio") {
+            const radioGroup = currentSection.querySelector(`input[name="${input.name}"]:checked`);
+            if (!radioGroup) {
                 isValid = false;
+                input.classList.add('border-red-500');
+                console.log(`❌ Falta seleccionar opción en: ${input.name}`);
+            }
+        } else if (input.tagName === "SELECT") {
+            if (!input.value.trim()) {
+                isValid = false;
+                input.classList.add('border-red-500');
+                console.log(`❌ Falta seleccionar opción en: ${input.name}`);
             } else {
                 input.classList.remove('border-red-500');
             }
-        });
-
-        if (isValid) {
-            currentSectionIndex++;
-            showSection(currentSectionIndex);
-            updateProgress();
         } else {
-            alert("Por favor, completa todos los campos obligatorios antes de continuar.");
+            if (!input.value.trim()) {
+                isValid = false;
+                input.classList.add('border-red-500');
+                console.log(`❌ Falta completar el campo: ${input.name}`);
+            } else {
+                input.classList.remove('border-red-500');
+            }
         }
     });
 
-        backButton.addEventListener('click', () => {
-            if (currentSectionIndex > 0) {
-                currentSectionIndex--;
-                showSection(currentSectionIndex);
-                updateProgress();
-            }
-        });
-        submitButton.addEventListener('click', (event) => {
-            console.log("Formulario enviado"); // Verifica si se ejecuta al hacer clic
-        });
-        // Inicializar la primera sección y la barra de progreso
+    if (!isValid) {
+        console.log(`⚠️ La sección ${currentSectionId} tiene errores.`);
+    } else {
+        console.log(`✅ La sección ${currentSectionId} está completa.`);
+    }
+
+    return isValid;
+}
+
+
+nextButton.addEventListener('click', () => {
+    console.log(`➡️ Intentando avanzar de sección ${currentSectionIndex} a ${currentSectionIndex + 1}`);
+
+    if (validarSeccionActual()) {
+        currentSectionIndex++;
         showSection(currentSectionIndex);
         updateProgress();
-    </script>
+    } else {
+        alert("Por favor, completa todos los campos obligatorios en esta sección antes de continuar.");
+    }
+});
+
+backButton.addEventListener('click', () => {
+    if (currentSectionIndex > 0) {
+        console.log(`⬅️ Retrocediendo de sección ${currentSectionIndex} a ${currentSectionIndex - 1}`);
+        currentSectionIndex--;
+        showSection(currentSectionIndex);
+        updateProgress();
+    }
+});
+
+submitButton.addEventListener('click', (event) => {
+    if (!validarSeccionActual()) {
+        event.preventDefault();
+        alert("Completa todos los campos antes de enviar el formulario.");
+    } else {
+        console.log("✅ Formulario enviado correctamente.");
+    }
+});
+
+// Inicializar la primera sección y la barra de progreso
+showSection(currentSectionIndex);
+updateProgress();
+
+</script>
+
 </body>
 </html>

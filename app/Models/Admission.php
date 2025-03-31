@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\documento;
 
 class Admission extends Model
 {
@@ -12,7 +13,7 @@ class Admission extends Model
 
     protected $fillable = [
         // Datos del solicitante
-        'user_id', 'apellido', 'nombre', 'fecha_nacimiento', 'lugar_nacimiento',
+        'user_id', 'apellido', 'nombre', 'fecha_nacimiento', 'lugar_nacimiento','provincia_nacimiento','pais_nacimiento',
         'provincia', 'pais', 'tipo_documento', 'documento', 'genero', 'direccion',
         'codigo_postal', 'ciudad', 'telefono_fijo', 'numero_telefono', 'email',
         'religion', 'adventista', 'bautizado', 'iglesia', 'estado_civil', 'cuil',
@@ -52,7 +53,7 @@ class Admission extends Model
         'resp_financiero_direccion', 'resp_financiero_cp', 'resp_financiero_localidad',
         'resp_financiero_provincia', 'resp_financiero_pais', 'resp_financiero_telefono',
         'resp_financiero_email', 'resp_financiero_tipo_documento', 'resp_financiero_documento',
-        'resp_financiero_edad', 'resp_financiero_ocupacion'
+        'resp_financiero_edad', 'resp_financiero_ocupacion', 'estado', 'observaciones'
     ];
 
     // Relación con el usuario
@@ -60,4 +61,8 @@ class Admission extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function documentos()
+{
+    return $this->hasMany(documento::class, 'usuario_id', 'id');
+}
 }

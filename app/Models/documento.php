@@ -11,10 +11,23 @@ class documento extends Model
 
     // Atributos que se pueden asignar masivamente
     protected $fillable = [
-        'Nombre',
-        'Descripcion',
-        'Tipo_documento',
-        'Fecha_subida',
-        'Estado',
+        'nombre',
+        'tipo_documento',
+        'descripcion',
+        'fecha_subida',
+        'usuario_id',
+        'archivo_id',
     ];
+
+    // Relación con Usuario
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id', 'id');
+    }
+
+    // Relación con Archivo
+    public function archivo()
+    {
+        return $this->belongsTo(Archivo::class, 'archivo_id', 'id');
+    }
 }

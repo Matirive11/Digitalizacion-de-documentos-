@@ -54,5 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admission::class);
     }
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class, 'usuario_id', 'id');
+    }
 
 }

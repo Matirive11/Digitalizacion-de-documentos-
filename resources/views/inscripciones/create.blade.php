@@ -51,8 +51,8 @@
             <div>
                 <x-input-label for="tipo_documento" :value="__('Documento tipo')" />
                 <select id="tipo_documento" name="tipo_documento" class="block mt-1 w-full">
-                    <option value="passport">Pasaporte</option>
-                    <option value="dni">DNI</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="DNI">DNI</option>
                 </select>
             </div>
             <div>
@@ -126,10 +126,10 @@
                 <x-input-label :value="__('¿Es Adventista del 7mo Día?')" />
                 <div class="flex items-center gap-4 mt-1">
                     <label class="flex items-center">
-                        <input type="radio" name="adventista" value="yes" class="mr-2"> Sí
+                        <input type="radio" name="adventista" value="true" class="mr-2"> Sí
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="adventista" value="no" class="mr-2"> No
+                        <input type="radio" name="adventista" value="false" class="mr-2"> No
                     </label>
                 </div>
             </div>
@@ -137,101 +137,133 @@
                 <x-input-label :value="__('¿Está bautizado?')" />
                 <div class="flex items-center gap-4 mt-1">
                     <label class="flex items-center">
-                        <input type="radio" name="bautizado" value="yes" class="mr-2"> Sí
+                        <input type="radio" name="bautizado" value="true" class="mr-2"> Sí
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="bautizado" value="no" class="mr-2"> No
+                        <input type="radio" name="bautizado" value="false" class="mr-2"> No
                     </label>
                 </div>
             </div>
         </div>
-    <!-- Iglesia a la que asiste -->
-    <div class="mb-4">
-        <x-input-label for="iglesia" :value="__('¿A qué iglesia asiste?')" />
-        <x-text-input id="iglesia" class="block mt-1 w-full" type="text" name="iglesia" required />
-    </div>
-
-    <!-- Estado Civil -->
-    <div class="mb-4">
-        <x-input-label :value="__('Estado civil')" />
-        <div class="flex items-center gap-4 mt-1">
-            <label class="flex items-center">
-                <input type="radio" name="estado_civil" value="single" class="mr-2"> Soltero
-            </label>
-            <label class="flex items-center">
-                <input type="radio" name="estado_civil" value="married" class="mr-2"> Casado
-            </label>
-            <label class="flex items-center">
-                <input type="radio" name="estado_civil" value="widowed" class="mr-2"> Viudo
-            </label>
-            <label class="flex items-center">
-                <input type="radio" name="estado_civil" value="divorced" class="mr-2"> Divorciado
-            </label>
-            <label class="flex items-center">
-                <input type="radio" name="estado_civil" value="separated" class="mr-2"> Separado
-            </label>
+        <!-- Iglesia a la que asiste -->
+        <div class="mb-4">
+            <x-input-label for="iglesia" :value="__('¿A qué iglesia asiste?')" />
+            <x-text-input id="iglesia" class="block mt-1 w-full" type="text" name="iglesia" required />
         </div>
-    </div>
 
-    <!-- Número de CUIL -->
-    <div class="mb-4">
-        <x-input-label for="cuil" :value="__('N° de CUIL')" />
-        <x-text-input id="cuil" class="block mt-1 w-full" type="text" name="cuil" required />
-    </div>
+        <!-- Estado Civil -->
+            <div class="mb-4">
+                <x-input-label :value="__('Estado civil')" />
+                <div class="flex items-center gap-4 mt-1">
+                    <label class="flex items-center">
+                        <input type="radio" name="estado_civil" value="soltero" class="mr-2"> Soltero
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="estado_civil" value="casado" class="mr-2"> Casado
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="estado_civil" value="viudo" class="mr-2"> Viudo
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="estado_civil" value="divorciado" class="mr-2"> Divorciado
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="estado_civil" value="separado" class="mr-2"> Separado
+                    </label>
+                </div>
+            </div>
+
+        <!-- Número de CUIL -->
+        <div class="mb-4">
+            <x-input-label for="cuil" :value="__('N° de CUIL')" />
+            <x-text-input id="cuil" class="block mt-1 w-full" type="text" name="cuil" required />
+        </div>
 
             </x-slot>
         </div>
 
         <!-- Sección 2 -->
-        <div x-show="currentSection === 2">
-            <x-slot name="section2" class="section2-styles">
-                <div class="container">
-                    <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
-                    <h2>CARRERA Y AÑO DE ESTUDIO AL QUE DESEA INGRESAR EL SOLICITANTE</h2>
+<!-- Sección 2 -->
+<div x-show="currentSection === 2">
+    <x-slot name="section2">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
+            <h2 class="text-lg font-bold text-blue-800 text-center">CARRERA Y AÑO DE ESTUDIO AL QUE DESEA INGRESAR EL SOLICITANTE</h2>
 
-                    <form>
-                        <!-- Opciones de carrera -->
-                        <div class="radio-group">
-                            <label>CARRERA</label>
-                            <label><input type="radio" name="carrera_interes" value="educacion_inicial"> Profesorado de Educación Inicial</label>
-                            <label><input type="radio" name="carrera_interes" value="educacion_primaria"> Profesorado de Educación Primaria</label>
-                            <label><input type="radio" name="carrera_interes" value="educacion_matematica"> Profesorado de Educación Secundaria en Matemática</label>
-                            <label><input type="radio" name="carrera_interes" value="musica"> Profesorado de Música</label>
-                            <label><input type="radio" name="carrera_interes" value="analista_sistemas"> Técnico Superior Analista de Sistemas</label>
-                            <label><input type="radio" name="carrera_interes" value="contable"> Técnico Superior Contable Administrativo</label>
-                            <label><input type="radio" name="carrera_interes" value="enfermeria"> Técnico Superior en Enfermería</label>
-                        </div>
+            <div class="space-y-4 mt-4">
+                <!-- Selección de carrera -->
+                <div>
+                    <label for="carrera_interes" class="block font-medium text-gray-700">Selecciona tu carrera</label>
+                    <select name="carrera_interes" id="carrera_interes" required
+                        class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+                        <option value="">Seleccione una opción</option>
+                        <option value="educacion_inicial">Profesorado de Educación Inicial</option>
+                        <option value="educacion_primaria">Profesorado de Educación Primaria</option>
+                        <option value="educacion_matematica">Profesorado de Educación Secundaria en Matemática</option>
+                        <option value="musica">Profesorado de Música</option>
+                        <option value="analista_sistemas">Técnico Superior Analista de Sistemas</option>
+                        <option value="contable">Técnico Superior Contable Administrativo</option>
+                        <option value="enfermeria">Técnico Superior en Enfermería</option>
+                    </select>
+                </div>
 
-                        <!-- Año de estudio -->
-                        <select name="anio_estudio">
-                            <option value="1">1° Año</option>
-                            <option value="2">2° Año</option>
-                            <option value="3">3° Año</option>
-                            <option value="4">4° Año</option>
-                          </select>
-
-
-                        <!-- Nivel de educación secundaria -->
-                        <div class="form-group">
-                            <label for="nivel_secundario">NIVEL DE SECUNDARIO</label>
-                            <select name="nivel_secundario" id="nivel_secundario" class="form-control">
-                                <option value="">Seleccione una opción</option>
-                                <option value="completo">Nivel Secundario completo</option>
-                                <option value="proceso">Nivel Secundario en proceso</option>
-                                <option value="incompleto">Nivel Secundario incompleto (Solicitar Protocolo de Admisión para mayores)</option>
-                            </select>
-                        </div>
-
-
-
-            </x-slot>
+        <!-- Selección del año de estudio (cambiará dinámicamente) -->
+        <div>
+            <label for="anio_estudio" class="block font-medium text-gray-700">Selecciona el año</label>
+            <select name="anio_estudio" id="anio_estudio" required
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+            </select>
         </div>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carreraSelect = document.getElementById("carrera_interes");
+            const anioSelect = document.getElementById("anio_estudio");
+
+            // Definir carreras que solo tienen hasta 3° año
+            const tecnicaturas = ["analista_sistemas", "contable", "enfermeria"];
+
+            function actualizarOpcionesAnio() {
+                anioSelect.innerHTML = ""; // Limpiar opciones
+
+                let maxAnio = tecnicaturas.includes(carreraSelect.value) ? 3 : 4;
+
+                for (let i = 1; i <= maxAnio; i++) {
+                    let option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = `${i}° Año`;
+                    anioSelect.appendChild(option);
+                }
+            }
+
+            // Evento para cambiar opciones del año según la carrera seleccionada
+            carreraSelect.addEventListener("change", actualizarOpcionesAnio);
+
+            // Inicializar opciones correctamente
+            actualizarOpcionesAnio();
+        });
+        </script>
+
+                <!-- Nivel Secundario -->
+                <div>
+                    <label for="nivel_secundario" class="block font-medium text-gray-700">NIVEL DE SECUNDARIO</label>
+                    <select name="nivel_secundario" id="nivel_secundario" required
+                        class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+                        <option value="">Seleccione una opción</option>
+                        <option value="completo">Nivel Secundario completo</option>
+                        <option value="proceso">Nivel Secundario en proceso</option>
+                        <option value="incompleto">Nivel Secundario incompleto (Solicitar Protocolo de Admisión para mayores)</option>
+                    </select>
+                </div>
+            </div>
         </div>
+    </x-slot>
+</div>
+
 
         <!-- Sección 3 -->
         <div x-show="currentSection === 3">
             <x-slot name="section3">
-                <div class="container">
+                <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
                     <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
                     <h2>VIDA ESTUDIANTIL</h2>
 
@@ -257,13 +289,13 @@
                     <div x-show="showAdditionalFields" class="p-4 bg-gray-50 border border-gray-400">
                         <div class="mb-2">
                             <label>
-                                <input type="checkbox" name="edad" value="mayor_20">
+                                <input type="checkbox" name="edad_adicional" value="mayor_20">
                                 Soy mayor de 20 años
                             </label>
                         </div>
                         <div class="mb-2">
                             <label>
-                                <input type="checkbox" name="edad" value="menor_20">
+                                <input type="checkbox" name="edad_adicional" value="menor_20">
                                 Soy menor de 20 años y viviré con:
                             </label>
                         </div>
@@ -283,12 +315,12 @@
                                 <x-text-input id="celular" class="block mt-1 w-full" type="text" name="celular" />
                             </div>
                             <div>
-                                <x-input-label for="direccion" :value="__('Dirección')" />
-                                <x-text-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" />
+                                <x-input-label for="direccion_tutor" :value="__('Dirección')" />
+                                <x-text-input id="direccion_tutor" class="block mt-1 w-full" type="text" name="direccion_tutor" />
                             </div>
                             <div>
-                                <x-input-label for="email" :value="__('Correo electrónico')" />
-                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" />
+                                <x-input-label for="email_tutor" :value="__('Correo electrónico')" />
+                                <x-text-input id="email_tutor" class="block mt-1 w-full" type="email" name="email_tutor" />
                             </div>
                             <div>
                                 <x-input-label for="vinculo_familiar" :value="__('¿Cuál es el vínculo familiar?')" />
@@ -300,16 +332,11 @@
             </x-slot>
         </div>
         </div>
-
-
-
-
-
-        <!-- Sección 4 -->
+     <!-- Sección 4 -->
         <div x-show="currentSection === 4">
             <x-slot name="section4">
-            <div class="container">
-                <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
+                    <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
                 <h2>PROGRAMA DE FORMACIÓN PROFESIONAL</h2>
 
                 <!-- Mensaje de advertencia -->
@@ -342,8 +369,8 @@
 
         <div x-show="currentSection === 5">
             <x-slot name="section5">
-            <div class="container">
-                <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
+                    <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
                 <h2>¿COMO SUPO ACERCA DEL ISAM?</h2>
                 <!-- Opciones -->
                 <div class="mb-4">
@@ -401,9 +428,9 @@
         </div>
 
         <!-- Sección 6 -->
-<div x-show="currentSection === 6">
+    <div x-show="currentSection === 6">
     <x-slot name="section6">
-        <div class="container">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
             <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
             <h2>SALUD DEL SOLICITANTE</h2>
             <div class="form-group">
@@ -462,12 +489,12 @@
 
         </div>
     </x-slot>
-</div>
+    </div>
 
-<!-- Sección 7 -->
-<div x-show="currentSection === 7">
+    <!-- Sección 7 -->
+    <div x-show="currentSection === 7">
     <x-slot name="section7">
-        <div class="container">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
             <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
             <h2>PADRES DEL SOLICITANTE</h2>
             <!-- Padre -->
@@ -528,8 +555,8 @@
                 <div>
                     <x-input-label for="padre_tipo_documento" :value="__('Tipo de Documento')" />
                     <select id="padre_tipo_documento" name="padre_tipo_documento" class="block mt-1 w-full">
-                        <option value="passport">Pasaporte</option>
-                        <option value="dni">DNI</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                        <option value="DNI">DNI</option>
                     </select>
                 </div>
                 <div>
@@ -608,8 +635,8 @@
                 <div>
                     <x-input-label for="madre_tipo_documento" :value="__('Tipo de Documento')" />
                     <select id="madre_tipo_documento" name="madre_tipo_documento" class="block mt-1 w-full">
-                        <option value="passport">Pasaporte</option>
-                        <option value="dni">DNI</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                        <option value="DNI">DNI</option>
                     </select>
                 </div>
                 <div>
@@ -631,12 +658,12 @@
             </div>
         </div>
     </x-slot>
-</div>
+    </div>
 
-<!-- Sección 8 -->
-<div x-show="currentSection === 8">
+    <!-- Sección 8 -->
+    <div x-show="currentSection === 8">
     <x-slot name="section8">
-        <div class="container">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
             <h1>INSTITUTO SUPERIOR ADVENTISTA DE MISIONES</h1>
             <h2>RESPONSABLE FINANCIERO</h2>
             <div class="flex gap-4 mb-4">
@@ -718,7 +745,7 @@
             </div>
         </div>
     </x-slot>
-</div>
+    </div>
 
 </x-form>
 

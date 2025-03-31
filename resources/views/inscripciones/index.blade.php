@@ -26,11 +26,16 @@
                             <td class="py-3 px-6">{{ $admission->numero_telefono }}</td>
                             <td class="py-3 px-6">{{ $admission->carrera_interes }}</td>
                             <td class="py-3 px-6 text-center">
-                                @if ($admission->estado)
-                                    <span class="bg-green-500 text-white px-2 py-1 rounded">Aprobada</span>
-                                @else
-                                    <span class="bg-yellow-500 text-white px-2 py-1 rounded">Pendiente</span>
-                                @endif
+                                @if ($admission->estado === 'Aprobado')
+                                <span class="bg-green-600 text-white px-2 py-1 rounded">Aprobado</span>
+                            @elseif ($admission->estado === 'En Observación')
+                                <span class="bg-orange-500 text-white px-2 py-1 rounded">En Observación</span>
+                            @elseif ($admission->estado === 'Rechazada')
+                                <span class="bg-red-600 text-white px-2 py-1 rounded">Rechazada</span>
+                            @else
+                                <span class="bg-gray-500 text-white px-2 py-1 rounded">Pendiente</span>
+                            @endif
+
                             </td>
                             <td class="py-3 px-6 flex justify-center gap-4">
                                 <a href="{{ route('inscripciones.show', $admission->id) }}" class="text-blue-500 hover:text-blue-700">

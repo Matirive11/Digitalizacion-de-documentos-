@@ -12,31 +12,37 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\FirmaDigitalController;
 use App\Http\Controllers\RolPermisoController;
-use App\Http\Controllers\InscripcionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Models\Admission;
 
 Route::middleware(['auth', 'role:admin|supervisor'])->group(function () {
     Route::get('/inscripciones', [AdmissionController::class, 'index'])->name('inscripciones.index');
     Route::get('/inscripciones/{id}', [AdmissionController::class, 'show'])->name('inscripciones.show');
-    Route::get('/inscripciones/{edit}', [AdmissionController::class, 'edit'])->name('inscripciones.edit');
     Route::delete('/inscripciones/{id}', [AdmissionController::class, 'destroy'])->name('inscripciones.destroy');
+    Route::get('/inscripciones/{id}/pdf', [AdmissionController::class, 'downloadPdf'])->name('inscripciones.downloadPdf');
+    Route::put('/admissions/{id}/update-state', [AdmissionController::class, 'actualizarEstado'])->name('admissions.updateState');
 
-});
-
-// Rutas protegidas (solo para usuarios autenticados)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/complete-profile', [AdmissionController::class, 'create'])->name('complete-profile'); // Página de perfil completo
-    Route::post('/matriculation/store', [AdmissionController::class, 'store'])->name('matriculation.store'); // Guardar admisión
-
-    // ✅ Nueva ruta para que ADMIN o SUPERVISOR vean las solicitudes
     Route::middleware(['can:view-admissions'])->group(function () {
         Route::get('/admin/admissions', [AdmissionController::class, 'index'])->name('admin.admissions'); // Ver todas las admisiones
         Route::get('/admin/admissions/{id}', [AdmissionController::class, 'show'])->name('admin.admissions.show'); // Ver detalle de una admisión
     });
 });
+
+// Rutas protegidas (solo para usuarios autenticados)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/complete-profile', [AdmissionController::class, 'create'])->name('complete-profile');
+    Route::post('/inscripciones/store', [AdmissionController::class, 'store'])->name('inscripciones.store');
+    Route::resource('documento', DocumentoController::class);
+    Route::get('/inscripciones/edit/{id}', [AdmissionController::class, 'edit'])->name('inscripciones.edit');
+    Route::put('/inscripciones/update/{id}', [AdmissionController::class, 'update'])->name('inscripciones.update');
+
+
+});
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::middleware('auth')->group(function () {
 Route::get('/home', function () {
@@ -45,9 +51,9 @@ Route::get('/home', function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 });
@@ -58,10 +64,10 @@ Route::resource('rol', RolController::class);
 Route::resource('tipo_archivo', TipoArchivoController::class);
 Route::resource('permiso', PermisoController::class);
 Route::resource('notificacion', NotificacionController::class);
-Route::resource('documento', DocumentoController::class);
 Route::resource('firma_digital', FirmaDigitalController::class);
 Route::resource('rol_permiso', RolPermisoController::class);
 Route::resource('users', UserController::class);
+Route::get('/estadistica', [AdmissionController::class, 'estadistica'])->name('inscripciones.estadistica');
 
 });
 require __DIR__.'/auth.php';

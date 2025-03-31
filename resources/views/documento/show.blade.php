@@ -1,9 +1,10 @@
 <x-layout>
     <x-titulo>Documento: {{ $documento['titulo'] }}</x-titulo>
     <div class="mt-4">
-        <p>Título: {{ $documento['titulo'] }}</p>
+        <p>Nombre: {{ $documento['nombre'] }}</p>
+        <p>Descripcion: {{ $documento['descripcion'] }}</p>
         <p>Tipo de documento: {{ $documento['tipo_documento'] }}</p>
-        <p>Ruta del archivo: {{ $documento['ruta'] }}</p>
+        <p>Usuario: {{ $documento['usuario_id'] }}</p>
     </div>
     <div class="mt-6 flex gap-x-6">
         <a href="/documento/{{ $documento['id'] }}/edit" class="p-4 bg-blue-200 text-blue-900">Editar documento</a>

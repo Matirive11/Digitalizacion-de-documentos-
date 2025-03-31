@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\documento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Archivo;
+use Illuminate\Support\Facades\Storage;
 
 class documentoController extends Controller
 {
@@ -37,31 +40,69 @@ class documentoController extends Controller
      */
     public function store(Request $request)
     {
-        // Validación del formulario
-        $datos = $request->validate([
-            'Nombre' => 'required|max:255',
-            'Descripcion' => 'required|max:255',
-            'Tipo_documento' => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'Fecha_subida' => 'required|date',
-            'Estado' => 'required|in:activo,inactivo',
-        ]);
+        $archivosEsperados = [
+            'dni' => 'Dni',
+            'titulo_tramite' => 'Titulo tramite',
+            'certificado_salud' => 'Certificado salud'
+        ];
 
-        // Guardar el archivo subido
-        if ($request->hasFile('Tipo_documento')) {
-            $rutaArchivo = $request->file('Tipo_documento')->store('documentos');
+        try {
+            foreach ($archivosEsperados as $campo => $descripcion) {
+                if ($request->hasFile($campo)) {
+                    $archivoSubido = $request->file($campo);
+
+                    // Obtener datos del archivo
+                    $nombreArchivo = $archivoSubido->getClientOriginalName();
+                    $extension = $archivoSubido->getClientOriginalExtension();
+                    $rutaArchivo = "public/archivos/{$archivoSubido->hashName()}";
+
+                    // Guardar en almacenamiento
+                    Storage::put($rutaArchivo, file_get_contents($archivoSubido));
+
+                    // Buscar si el documento ya existe
+                    $documentoExistente = Documento::where('usuario_id', Auth::id())
+                        ->where('descripcion', $descripcion)
+                        ->first();
+
+                    if ($documentoExistente) {
+                        // 🔄 Si el documento ya existe, actualizarlo
+                        $documentoExistente->update([
+                            'nombre' => $nombreArchivo,
+                            'tipo_documento' => $extension,
+                            'fecha_subida' => now(),
+                            'archivo_id' => Archivo::create([
+                                'nombre' => $nombreArchivo,
+                                'tipo' => $extension,
+                                'ruta' => $rutaArchivo
+                            ])->id
+                        ]);
+                    } else {
+                        // 🆕 Si no existe, crear un nuevo documento
+                        Documento::create([
+                            'usuario_id' => Auth::id(),
+                            'nombre' => $nombreArchivo,
+                            'descripcion' => $descripcion,
+                            'tipo_documento' => $extension,
+                            'fecha_subida' => now(),
+                            'archivo_id' => Archivo::create([
+                                'nombre' => $nombreArchivo,
+                                'tipo' => $extension,
+                                'ruta' => $rutaArchivo
+                            ])->id
+                        ]);
+                    }
+                }
+            }
+
+            return redirect()->route('dashboard')->with('success', 'Documentos subidos o actualizados correctamente.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard')->with('error', 'Error al subir archivos: ' . $e->getMessage());
         }
-
-        // Crear el registro en la base de datos
-        documento::create([
-            'Nombre' => $datos['Nombre'],
-            'Descripcion' => $datos['Descripcion'],
-            'Tipo_documento' => $rutaArchivo,
-            'Fecha_subida' => $datos['Fecha_subida'],
-            'Estado' => $datos['Estado'],
-        ]);
-
-        return redirect()->route('documento.index');
     }
+
+
+
 
     /**
      * Display the specified resource.
