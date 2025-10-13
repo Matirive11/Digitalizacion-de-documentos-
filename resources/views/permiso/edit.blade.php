@@ -1,10 +1,10 @@
 <x-layout>
     <x-titulo>Editar permiso: {{ $permiso['nombre'] }}</x-titulo>
-<<<<<<< HEAD
+
     <form action="/rol/{{ $permiso['id'] }}" method="POST">
-=======
+
     <form action="/permiso/{{ $permiso['id'] }}" method="POST">
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
         @csrf
         @method('PATCH')
         <div class="flex flex-col mb-4">

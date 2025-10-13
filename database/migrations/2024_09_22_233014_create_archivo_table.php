@@ -13,22 +13,14 @@ return new class extends Migration
     {
         Schema::create('archivo', function (Blueprint $table) {
             $table->id();
-<<<<<<< HEAD
-            $table->string('nombre', 45);
-=======
             $table->string('nombre', 100);
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
             $table->string('tipo', 45);
             $table->string('ruta', 200);
             $table->integer('id_tipo_archivo');
-
             $table->timestamps();
         });
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
     /**
      * Reverse the migrations.
      */

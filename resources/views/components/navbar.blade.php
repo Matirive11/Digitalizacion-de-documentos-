@@ -1,19 +1,23 @@
-<nav class="bg-[#003466] text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-        <!-- Imagen alineada a la izquierda -->
-        <div class="flex items-center space-x-4">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo ISAM" class="w-12 h-12 object-contain">
-            <a href="#" class="text-xl font-bold">Área Principal</a>
-        </div>
+<nav class="bg-white shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-14">
+            <!-- LOGO PEQUEÑO -->
+            <div class="flex items-center space-x-3">
+                <!-- Asegurate de que images/logo.png no tenga mucho espacio blanco dentro del archivo -->
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-6 max-h-10 w-auto object-contain block">
+                <!-- Título pequeño opcional -->
+                <span class="text-sm font-semibold text-gray-800 hidden sm:inline">Dashboard</span>
+            </div>
 
-        <!-- Menú de navegación -->
-        <ul class="flex space-x-4">
-            <li><a href="{{ route('home') }}" class="hover:text-gray-300">Inicio</a></li>
-            <li><a href="{{ route('profile.edit') }}" class="hover:text-gray-300">Perfil</a></li>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="hover:text-gray-300">Cerrar Sesión</button>
-            </form>
-        </ul>
+            <!-- AVATAR / USUARIO -->
+            <div class="flex items-center space-x-3 text-sm text-gray-600">
+                <div class="hidden sm:block">
+                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                </div>
+                <div class="h-8 w-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-700 font-semibold">
+                    {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}
+                </div>
+            </div>
+        </div>
     </div>
 </nav>

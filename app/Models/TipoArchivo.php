@@ -11,9 +11,6 @@ class TipoArchivo extends Model
     protected $guarded = [];
     public $timestamps = false; // Desactiva los timestamps
 
-<<<<<<< HEAD
     protected $table = 'Tipo_archivo';
-=======
-    protected $table = 'tipo_archivo';
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
 }

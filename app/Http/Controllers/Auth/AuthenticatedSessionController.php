@@ -28,11 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-<<<<<<< HEAD
+
         return redirect()->intended(route('dashboard', absolute: false));
-=======
+
         return redirect()->route('dashboard');
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
     }
 
     /**
@@ -46,10 +46,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-<<<<<<< HEAD
+
         return redirect('/');
-=======
+
         return redirect()->route('dashboard');
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
     }
 }

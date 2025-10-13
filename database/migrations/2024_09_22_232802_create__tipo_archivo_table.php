@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<< HEAD
-        Schema::create('Tipo_archivo', function (Blueprint $table) {
-=======
         Schema::create('tipo_archivo', function (Blueprint $table) {
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
             $table->id();
             $table->string('descripcion');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_tipo_archivo');
+        Schema::dropIfExists('tipo_archivo');
     }
 };

@@ -6,21 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-<<<<<<< HEAD
     /**
      * Run the migrations.
      */
-=======
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-<<<<<<< HEAD
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->integer('dni')->unique();
+            $table->bigInteger('telefono')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('estado')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -46,26 +46,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-=======
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->integer('dni')->unique();
-            $table->bigInteger('telefono')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->boolean('estado')->default(1);
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
-
-    public function down(): void
-    {
+        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('users');
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
     }
 };

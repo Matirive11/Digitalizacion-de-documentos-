@@ -11,16 +11,17 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-<<<<<<< HEAD
     /**
-     * Display the user's profile form.
+     * Mostrar el formulario de completar perfil.
      */
-=======
-    public function create()
+    public function create(): View
     {
         return view('profile.complete');
     }
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
+    /**
+     * Mostrar el formulario de edición del perfil.
+     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -29,7 +30,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Actualizar la información del perfil del usuario.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -45,7 +46,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Eliminar la cuenta del usuario.
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -64,9 +65,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-<<<<<<< HEAD
-=======
-    public function store(Request $request)
+
+    /**
+     * Guardar información adicional del perfil.
+     */
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'address' => 'required|string|max:255',
@@ -85,5 +88,4 @@ class ProfileController extends Controller
 
         return redirect()->route('dashboard')->with('status', 'Perfil completado con éxito');
     }
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
 }

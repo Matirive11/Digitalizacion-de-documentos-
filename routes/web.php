@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Http\Controllers\AdmissionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
@@ -10,14 +8,6 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\PermisoController;
-
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\FirmaDigitalController;
@@ -136,7 +126,9 @@ Route::resource('rol', RolController::class);
 Route::resource('tipo_archivo', TipoArchivoController::class);
 Route::resource('permiso', PermisoController::class);
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::resource('notificacion', NotificacionController::class);
 Route::resource('documento', DocumentoController::class);

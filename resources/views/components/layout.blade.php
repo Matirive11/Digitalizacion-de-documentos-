@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name', 'Mi Aplicación') }}</title>
     <!-- Importar Tailwind CSS -->
-<<<<<<< HEAD
+
     @vite('resources/css/app.css')
 </head>
 <body class="bg-blue-50 text-gray-800">
     <!-- Contenedor principal -->
-=======
+
     @vite(['resources/css/app.css'])
 </head>
 <body class="bg-blue-50 text-gray-800">
     <!-- Contenedor principal -->
     <x-navbar />
 
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
     <div class="pt-20 container mx-auto">
         <div class="bg-white shadow-md rounded-md p-6">
            {{$slot}}

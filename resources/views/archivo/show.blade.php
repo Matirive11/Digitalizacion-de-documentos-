@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 <img src="{{ asset($url) }}" alt="Imagen de logo de usuario">
-=======
+
 <x-layout>
     <x-titulo>Archivo: {{ $archivo['nombre'] }}</x-titulo>
     <div class="mt-4">
@@ -33,4 +33,4 @@
         }
     });
 </script>
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+

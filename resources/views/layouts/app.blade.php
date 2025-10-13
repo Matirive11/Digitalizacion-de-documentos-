@@ -19,7 +19,7 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-<<<<<<< HEAD
+
             @isset($header)
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -31,7 +31,7 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
-=======
+
             @hasSection('header')
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -43,7 +43,6 @@
             <!-- Page Content -->
             <main>
                 @yield('content')
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
             </main>
         </div>
     </body>

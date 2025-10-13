@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <form action="{{ route('archivo.store') }}" method="POST" class="my-10" enctype="multipart/form-data">
         @csrf
         <div>
@@ -16,7 +16,7 @@
             <input type="submit" value="Guardar" class="p-3 text-blue-900 bg-blue-200 rounded">
         </div>
     </form>
-=======
+
 <x-layout>
     <x-titulo>Crear archivo</x-titulo>
     <form action="{{ route('archivo.store') }}" method="POST" enctype="multipart/form-data">
@@ -49,4 +49,4 @@
         <input type="submit" value="Crear" class="p-4 bg-blue-200 text-blue-900">
     </form>
 </x-layout>
->>>>>>> 97f71c4 (Primer commit - proyecto Laravel Digitalizacion)
+
