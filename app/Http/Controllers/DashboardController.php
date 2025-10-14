@@ -5,23 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admission;
-use App\Models\User;
+use App\Models\InscripcionMateria;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Cargar el usuario con sus roles correctamente
-        $user = User::with('roles')->where('id', Auth::id())->first();
-        $inscripcion = $user->admission; // Obtener inscripción si existe
+        $user = Auth::user();
 
-        // Verificar si el usuario tiene un rol específico
+        // 🔹 Si es admin → mostrar panel administrativo
         if ($user->hasRole('admin')) {
-            return view('dashboard.admin', compact('user'));
-        } elseif ($user->hasRole('supervisor')) {
-            return view('dashboard.supervisor', compact('user'));
-        } else {
-            return view('dashboard.alumno', compact('user', 'inscripcion'));
+            $inscripciones = InscripcionMateria::with(['materia', 'estudiante'])->get();
+
+            return view('dashboard.admin', [
+                'user' => $user,
+                'inscripciones' => $inscripciones
+            ]);
         }
+
+        // 🔹 Usuario común → verificar si tiene inscripción principal
+        $inscripcion = Admission::where('user_id', $user->id)->first();
+        $tieneInscripcion = $inscripcion !== null;
+
+        // 🔹 Si tiene inscripción, cargar sus materias
+        $inscripciones = collect();
+        if ($tieneInscripcion) {
+            $inscripciones = InscripcionMateria::where('estudiante_id', $user->id)
+                ->with('materia')
+                ->get();
+        }
+
+        // 🔹 Estado de inscripción (seguro)
+        $estadoInscripcion = 'desconocido';
+        if ($inscripcion) {
+            $estadoInscripcion = $inscripcion->estado ?? 'pendiente';
+        }
+
+        // 🔹 Retornar vista del usuario
+        return view('dashboard.user', [
+            'user' => $user,
+            'inscripciones' => $inscripciones,
+            'tieneInscripcion' => $tieneInscripcion,
+            'inscripcion' => $inscripcion,
+            'estadoInscripcion' => $estadoInscripcion,
+        ]);
     }
 }

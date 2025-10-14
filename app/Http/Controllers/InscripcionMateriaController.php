@@ -6,27 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\Materia;
 use App\Models\InscripcionMateria;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InscripcionMateriaController extends Controller
 {
     /**
-     * Mostrar materias disponibles para inscripción
+     * 📚 Mostrar materias disponibles para inscripción (para usuarios normales)
      */
     public function index()
     {
         $user = Auth::user();
 
+        // Si es admin, redirige al panel administrativo
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.inscripciones.index');
+        }
+
+        // Materias con sus correlativas
         $materias = Materia::with('correlativas')->get();
+
+        // Inscripciones del usuario actual
         $inscripciones = $user->inscripciones()->with('materia')->get();
 
+        // Procesamos materias disponibles
         $materiasDisponibles = $materias->map(function ($materia) use ($inscripciones) {
             $correlativasIds = $materia->correlativas->pluck('id');
 
-            // Chequear correlativas aprobadas o regulares
             $cumpleCorrelativas = $correlativasIds->every(function ($id) use ($inscripciones) {
                 return $inscripciones
                     ->where('materia_id', $id)
-                    ->whereIn('estado', ['regular', 'aprobado'])
+                    ->whereIn('estado', ['Regular', 'Aprobado'])
                     ->isNotEmpty();
             });
 
@@ -41,11 +50,11 @@ class InscripcionMateriaController extends Controller
             ];
         });
 
-        return view('inscripcionmateria.index', compact('materiasDisponibles'));
+        return view('inscripcionmateria.index', compact('materiasDisponibles', 'inscripciones'));
     }
 
     /**
-     * Guardar inscripción
+     * 💾 Guardar inscripción
      */
     public function store(Request $request)
     {
@@ -75,16 +84,26 @@ class InscripcionMateriaController extends Controller
     }
 
     /**
-     * Materias inscriptas del usuario
+     * 📘 Materias inscriptas del usuario
      */
     public function misMaterias()
     {
-        $materias = Auth::user()->materias;
+        $user = Auth::user();
+
+        // Admin redirigido al panel
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.inscripciones.index');
+        }
+
+        $materias = InscripcionMateria::with('materia')
+            ->where('estudiante_id', $user->id)
+            ->get();
+
         return view('inscripcionmateria.mis_materias', compact('materias'));
     }
 
     /**
-     * Baja de una materia
+     * ❌ Baja de una materia
      */
     public function baja($materiaId)
     {
@@ -100,5 +119,46 @@ class InscripcionMateriaController extends Controller
         }
 
         return redirect()->route('inscripcionmateria.misMaterias')->with('error', 'No se encontró la inscripción.');
+    }
+
+    /**
+     * 🧩 Vista para el admin con todas las inscripciones
+     */
+    public function adminIndex()
+    {
+        $inscripciones = InscripcionMateria::with(['materia', 'estudiante'])->get();
+
+        return view('admin.inscripciones.index', compact('inscripciones'));
+    }
+
+    /**
+     * 🧠 Actualizar estado de inscripción (solo admin)
+     */
+    public function updateEstado(Request $request, $id)
+    {
+        $request->validate([
+            'estado' => 'required|in:Inscripto,Regular,Aprobado,Libre',
+        ]);
+
+        $inscripcion = InscripcionMateria::findOrFail($id);
+        $inscripcion->estado = $request->estado;
+        $inscripcion->save();
+
+        return redirect()->back()->with('success', '✅ Estado actualizado correctamente.');
+    }
+
+    /**
+     * 📄 Descargar certificado (solo materias aprobadas)
+     */
+    public function certificado($id)
+    {
+        $inscripcion = InscripcionMateria::with(['materia', 'estudiante'])->findOrFail($id);
+
+        if ($inscripcion->estado !== 'Aprobado') {
+            return redirect()->back()->with('error', 'Solo puedes descargar certificados de materias aprobadas.');
+        }
+
+        $pdf = Pdf::loadView('inscripcionmateria.certificado_pdf', compact('inscripcion'));
+        return $pdf->download('Certificado_' . $inscripcion->materia->nombre . '.pdf');
     }
 }

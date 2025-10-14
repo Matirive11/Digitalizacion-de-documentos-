@@ -58,4 +58,10 @@ class Admission extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function carrera()
+{
+    return $this->belongsTo(Carrera::class);
+}
+
 }

@@ -50,7 +50,7 @@
             <!-- CUIL -->
             <div class="mb-4">
                 <x-input-label for="cuil" :value="__('CUIL')" />
-                <x-text-input id="cuil" class="block mt-1 w-full" type="number" name="cuil" required />
+                <x-text-input id="cuil" type="text" name="cuil" inputmode="numeric" pattern="[0-9\-]*" placeholder="Ej: 20-12345678-3" require/>
             </div>
 
             <!-- Género -->

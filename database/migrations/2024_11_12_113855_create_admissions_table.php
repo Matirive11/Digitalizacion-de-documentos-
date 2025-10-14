@@ -100,6 +100,9 @@ return new class extends Migration
             $table->integer('financial_age')->nullable();
             $table->string('financial_occupation')->nullable();
 
+            // === NUEVO CAMPO ===
+            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
+
             $table->timestamps();
         });
     }

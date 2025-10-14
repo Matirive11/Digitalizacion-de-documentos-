@@ -18,4 +18,10 @@ class InscripcionMateria extends Model
     {
         return $this->belongsTo(User::class, 'estudiante_id');
     }
+
+    // 👇 Alias para usar 'user' y no romper código existente
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'estudiante_id');
+    }
 }

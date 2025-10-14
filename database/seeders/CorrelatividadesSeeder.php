@@ -12,37 +12,62 @@ class CorrelatividadesSeeder extends Seeder
     {
         DB::table('correlatividades')->truncate();
 
-        $getMateriaId = fn($nombre) => Materia::where('nombre', $nombre)->value('id');
+        $get = fn($nombre) => Materia::where('nombre', $nombre)->value('id');
 
-        $correlatividades = [
-            // ===== 2º AÑO =====
-            ['materia' => 'Inglés II', 'depende_de' => ['Inglés I']],
-            ['materia' => 'Programación II', 'depende_de' => ['Programación I', 'Estructuras de Datos']],
-            ['materia' => 'Programación Orientada a Objetos', 'depende_de' => ['Programación I']],
-            ['materia' => 'Sistemas Distribuidos', 'depende_de' => ['Sistemas Operativos']],
-            ['materia' => 'Elementos de Costo y Contabilidad', 'depende_de' => ['Matemática']],
-            ['materia' => 'Análisis Matemático', 'depende_de' => ['Matemática']],
-            ['materia' => 'Práctica Profesional I', 'depende_de' => ['Programación I', 'Estructuras de Datos']],
+        $relaciones = [
 
-            // ===== 3º AÑO =====
-            ['materia' => 'Investigación Operativa', 'depende_de' => ['Análisis Matemático']],
-            ['materia' => 'Bases de Datos', 'depende_de' => ['Estructuras de Datos']],
-            ['materia' => 'Análisis y Diseño de Sistemas', 'depende_de' => ['Programación II', 'Estructuras de Datos']],
-            ['materia' => 'Redes de Ordenadores', 'depende_de' => ['Sistemas Distribuidos']],
-            ['materia' => 'Práctica Profesional II', 'depende_de' => ['Práctica Profesional I', 'Análisis y Diseño de Sistemas']],
-            ['materia' => 'Seminario de Sistemas', 'depende_de' => ['Análisis y Diseño de Sistemas']],
+            // ===== 1° AÑO =====
+            ['materia' => 'Ingles I', 'depende_de' => []],
+            ['materia' => 'Matematica', 'depende_de' => []],
+            ['materia' => 'Logica', 'depende_de' => []],
+            ['materia' => 'Organizacion de Computadoras', 'depende_de' => []],
+            ['materia' => 'Sistemas operativos', 'depende_de' => ['']],
+            ['materia' => 'Algoritmos', 'depende_de' => ['']],
+            ['materia' => 'Estructuras de Datos', 'depende_de' => ['']],
+            ['materia' => 'Programacion I', 'depende_de' => ['']],
+            ['materia' => 'Practica profesional de laboratorio', 'depende_de' => ['']],
+
+            // ===== 2° AÑO =====
+            ['materia' => 'Inglés II', 'depende_de' => ['Ingles I']],
+            ['materia' => 'Metodologia de la investigacion', 'depende_de' => ['']],
+            ['materia' => 'Cosmovision y antropologia biblica', 'depende_de' => ['']],
+            ['materia' => 'Etica y deotologia profesional', 'depende_de' => ['']],
+            ['materia' => 'Teoria de las organizaciones', 'depende_de' => ['']],
+            ['materia' => 'Analisis matematico', 'depende_de' => ['Matematica','Logica']],
+            ['materia' => 'Elementos de Costo y Contabilidad', 'depende_de' => ['']],
+            ['materia' => 'Sistemas distribuidos', 'depende_de' => ['Sistemas operativos']],
+            ['materia' => 'Programacion orientada a objetos', 'depende_de' => ['Estructura de datos','Sistemas operativos']],
+            ['materia' => 'Sistemas de informacion', 'depende_de' => ['Estructura de datos']],
+            ['materia' => 'Programacion II', 'depende_de' => ['Programacion I']],
+            ['materia' => 'Practica profesional I', 'depende_de' => ['']],
+            ['materia' => 'Formacion integral en salud y familia', 'depende_de' => ['']],
+            ['materia' => 'Perspectiva escatologica de la salvacion', 'depende_de' => ['']],
+
+            // ===== 3° AÑO =====
+            ['materia' => 'Estadistica', 'depende_de' => ['Matematica','Logica']],
+            ['materia' => 'Productividad y calidad total', 'depende_de' => ['Metodologia de la investigacion']],
+            ['materia' => 'Comunicaciones', 'depende_de' => ['Sistemas distribuidos']],
+            ['materia' => 'Derecho de la informatica', 'depende_de' => ['']],
+            ['materia' => 'Analisis y disenio de sistemas', 'depende_de' => ['Programacion orientada a objetos', 'Programacion II']],
+            ['materia' => 'Investigacion operativa', 'depende_de' => ['Sistemas distribuidos','Sistemas de informacion','Programacion orientada a objetos']],
+            ['materia' => 'Base de datos', 'depende_de' => ['Sistemas distribuidos']],
+            ['materia' => 'Redes de ordenadores', 'depende_de' => ['']],
+            ['materia' => 'Practica profesional II', 'depende_de' => ['Practica profesional I']],
+            ['materia' => 'Seminarios de sistemas', 'depende_de' => ['Sistemas de informacion']],
+            ['materia' => 'Fe y ciencia', 'depende_de' => ['']],
+            ['materia' => 'Liderazgo para el servicio', 'depende_de' => ['']],
         ];
 
-        foreach ($correlatividades as $data) {
-            $materiaId = $getMateriaId($data['materia']);
+        foreach ($relaciones as $r) {
+            $materiaId = $get($r['materia']);
             if (!$materiaId) continue;
 
-            foreach ($data['depende_de'] as $nombreCorrelativa) {
-                $correlativaId = $getMateriaId($nombreCorrelativa);
-                if ($correlativaId) {
+            foreach ($r['depende_de'] as $dep) {
+                $depId = $get($dep);
+                if ($depId) {
                     DB::table('correlatividades')->insert([
                         'materia_id' => $materiaId,
-                        'correlativa_id' => $correlativaId,
+                        'correlativa_id' => $depId,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -50,6 +75,6 @@ class CorrelatividadesSeeder extends Seeder
             }
         }
 
-        $this->command->info('✅ Correlatividades cargadas correctamente según el Plan TSAS 2023.');
+        $this->command->info('✅ Todas las correlatividades del Plan TSAS 2023 fueron cargadas correctamente.');
     }
 }

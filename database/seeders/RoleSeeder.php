@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
         // Crear roles (si no existen)
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $userRole = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
-        $supervisorRole = Role::firstOrCreate(['name' => 'supervisor', 'guard_name' => 'web']);
+        
 
         // Crear permisos básicos
         $permissions = [
@@ -35,7 +35,6 @@ class RoleSeeder extends Seeder
 
         // Asignar permisos a roles
         $adminRole->syncPermissions(Permission::all());
-        $supervisorRole->syncPermissions(['ver usuarios', 'editar usuarios']);
         $userRole->syncPermissions(['ver usuarios']);
 
         // Crear usuario administrador predeterminado

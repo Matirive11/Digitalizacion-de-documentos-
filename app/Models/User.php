@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'estado',
+        'profile_photo_path',
     ];
 
     protected $hidden = [
@@ -36,6 +37,7 @@ class User extends Authenticatable
         ];
     }
 
+    // 🔹 Relaciones
     public function materias()
     {
         return $this->belongsToMany(Materia::class, 'inscripcion_materias', 'estudiante_id', 'materia_id');
@@ -49,5 +51,28 @@ class User extends Authenticatable
     public function admission()
     {
         return $this->hasOne(Admission::class);
+    }
+
+    // 🔹 Métodos de roles (Spatie)
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isAlumno()
+    {
+        return $this->hasRole('alumno');
+    }
+
+    public function isSupervisor()
+    {
+        return $this->hasRole('supervisor');
+    }
+
+    // ✅ Nombre completo (si no hay nombre, muestra "Sin nombre")
+    public function getNameAttribute()
+    {
+        $nombre = trim("{$this->first_name} {$this->last_name}");
+        return $nombre !== '' ? $nombre : 'Sin nombre';
     }
 }
