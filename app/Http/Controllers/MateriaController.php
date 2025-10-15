@@ -175,4 +175,5 @@ class MateriaController extends Controller
 
         return view('inscripcionmateria.mis_materias', compact('materias'));
     }
+    
 }

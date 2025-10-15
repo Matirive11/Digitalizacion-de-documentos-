@@ -24,4 +24,5 @@ class InscripcionMateria extends Model
     {
         return $this->belongsTo(User::class, 'estudiante_id');
     }
+    
 }

@@ -49,9 +49,10 @@ class User extends Authenticatable
     }
 
     public function admission()
-    {
-        return $this->hasOne(Admission::class);
-    }
+{
+    return $this->hasOne(Admission::class, 'user_id');
+}
+
 
     // 🔹 Métodos de roles (Spatie)
     public function isAdmin()
@@ -75,4 +76,8 @@ class User extends Authenticatable
         $nombre = trim("{$this->first_name} {$this->last_name}");
         return $nombre !== '' ? $nombre : 'Sin nombre';
     }
+
+
+
+
 }

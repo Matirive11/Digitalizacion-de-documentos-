@@ -15,12 +15,16 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             // === SECCIÓN 1: Datos del solicitante ===
-            $table->string('nombre');
-            $table->string('apellido');
+            $table->string('nombre')->nullable();
+            $table->string('apellido')->nullable();
             $table->date('fecha_nacimiento')->nullable();
-            $table->string('documento')->nullable();
+
+            // ✅ estos campos no deben repetirse
+            $table->string('documento')->unique()->nullable();
+            $table->string('cuil')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
+
             $table->enum('estado_civil', ['soltero', 'casado', 'viudo', 'divorciado', 'separado'])->nullable();
-            $table->string('cuil')->nullable();
             $table->enum('genero', ['M', 'F'])->nullable();
             $table->string('nacionalidad')->nullable();
             $table->string('direccion')->nullable();
@@ -28,9 +32,8 @@ return new class extends Migration
             $table->string('provincia')->nullable();
             $table->string('pais')->nullable();
             $table->string('codigo_postal')->nullable();
-            $table->string('numero_telefono')->nullable();
-            $table->string('telefono_alternativo')->nullable();
-            $table->string('email')->nullable();
+            $table->string('numero_telefono')->unique()->nullable();
+            $table->string('telefono_alternativo')->unique()->nullable();
             $table->string('nivel_educativo')->nullable();
             $table->string('carrera_interes')->nullable();
 
@@ -41,14 +44,14 @@ return new class extends Migration
             $table->boolean('solicita_residencia')->nullable();
             $table->boolean('mayor_20')->nullable();
             $table->string('nombre_conviviente')->nullable();
-            $table->string('telefono_conviviente')->nullable();
+            $table->string('telefono_conviviente')->unique()->nullable();
             $table->string('direccion_conviviente')->nullable();
             $table->string('vinculo_familiar')->nullable();
 
             // === SECCIÓN 4 ===
             $table->boolean('beca_parcial')->nullable();
             $table->boolean('beca_total')->nullable();
-            $table->boolean('prestamo_honor')->nullable();
+            $table->boolean('no_quiero_beca')->nullable();
 
             // === SECCIÓN 5 ===
             $table->json('fuente_informacion')->nullable();
@@ -72,17 +75,17 @@ return new class extends Migration
             $table->string('father_first_name')->nullable();
             $table->string('father_last_name')->nullable();
             $table->string('father_address')->nullable();
-            $table->string('father_phone')->nullable();
-            $table->string('father_email')->nullable();
-            $table->string('father_document_number')->nullable();
+            $table->string('father_phone')->unique()->nullable();
+            $table->string('father_email')->unique()->nullable();
+            $table->string('father_document_number')->unique()->nullable();
             $table->string('father_occupation')->nullable();
 
             $table->string('mother_first_name')->nullable();
             $table->string('mother_last_name')->nullable();
             $table->string('mother_address')->nullable();
-            $table->string('mother_phone')->nullable();
-            $table->string('mother_email')->nullable();
-            $table->string('mother_document_number')->nullable();
+            $table->string('mother_phone')->unique()->nullable();
+            $table->string('mother_email')->unique()->nullable();
+            $table->string('mother_document_number')->unique()->nullable();
             $table->string('mother_occupation')->nullable();
 
             // === SECCIÓN 8: Responsable financiero ===
@@ -93,10 +96,10 @@ return new class extends Migration
             $table->string('financial_locality')->nullable();
             $table->string('financial_province')->nullable();
             $table->string('financial_country')->nullable();
-            $table->string('financial_phone')->nullable();
-            $table->string('financial_email')->nullable();
+            $table->string('financial_phone')->unique()->nullable();
+            $table->string('financial_email')->unique()->nullable();
             $table->string('financial_document_type')->nullable();
-            $table->string('financial_document_number')->nullable();
+            $table->string('financial_document_number')->unique()->nullable();
             $table->integer('financial_age')->nullable();
             $table->string('financial_occupation')->nullable();
 
@@ -104,6 +107,9 @@ return new class extends Migration
             $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
 
             $table->timestamps();
+
+            // ✅ Prevención de duplicados: un usuario solo puede tener una inscripción
+            $table->unique('user_id', 'unique_user_admission');
         });
     }
 

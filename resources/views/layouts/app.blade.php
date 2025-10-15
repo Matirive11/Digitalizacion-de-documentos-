@@ -13,6 +13,14 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- ✅ Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- ✅ Evita parpadeo de secciones ocultas -->
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 
 <body class="font-sans antialiased bg-gray-100 min-h-screen flex flex-col">
@@ -20,7 +28,7 @@
     {{-- ✅ Barra de navegación --}}
     @include('layouts.navigation')
 
-    {{-- ✅ Contenido principal (ajustado para que no quede tapado) --}}
+    {{-- ✅ Contenido principal --}}
     <main class="flex-grow p-6 pt-28 transition-all duration-300">
         {{ $slot ?? '' }}
         @yield('content')
@@ -71,5 +79,6 @@
             });
         });
     </script>
+
 </body>
 </html>

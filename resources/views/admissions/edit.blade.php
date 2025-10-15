@@ -3,10 +3,37 @@
 
 @section('content')
 <div class="p-6">
+
+    {{-- ✅ Mensaje de éxito --}}
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
     <!-- ✅ AlpineJS controla el formulario -->
-    <form method="POST" action="{{ route('admission.update', $admission->id) }}" x-data="{ currentSection: 1, residencia: null }">
-        @csrf
-        @method('PUT')
+    <form method="POST" action="{{ route('admissions.update', $admission->id) }}">
+    @csrf
+    @method('PUT')
+
+    @if (session('success'))
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-400">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-400">
+            <strong>Ocurrieron algunos errores:</strong>
+            <ul class="mt-2 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 
         <!-- ✅ Sección 1: Datos del solicitante -->
         <div x-show="currentSection === 1">
@@ -906,3 +933,4 @@
         </div>
     </div>
 </div>
+</form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Admission;
 use App\Models\InscripcionMateria;
 
@@ -13,21 +14,22 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 🔹 Si es admin → mostrar panel administrativo
+        // 🧠 Si el usuario es ADMIN → mostrar panel administrativo
         if ($user->hasRole('admin')) {
-            $inscripciones = InscripcionMateria::with(['materia', 'estudiante'])->get();
+            // Traer todos los alumnos con sus inscripciones (Admission)
+            $alumnos = User::whereHas('admission')
+                ->with('admission')
+                ->get();
 
-            return view('dashboard.admin', [
-                'user' => $user,
-                'inscripciones' => $inscripciones
-            ]);
+            // Enviar a la vista dashboard.admin
+            return view('dashboard.admin', compact('user', 'alumnos'));
         }
 
-        // 🔹 Usuario común → verificar si tiene inscripción principal
+        // 🧑‍🎓 Si el usuario es alumno → mostrar panel del estudiante
         $inscripcion = Admission::where('user_id', $user->id)->first();
         $tieneInscripcion = $inscripcion !== null;
 
-        // 🔹 Si tiene inscripción, cargar sus materias
+        // Traer materias del alumno si tiene inscripción
         $inscripciones = collect();
         if ($tieneInscripcion) {
             $inscripciones = InscripcionMateria::where('estudiante_id', $user->id)
@@ -35,19 +37,16 @@ class DashboardController extends Controller
                 ->get();
         }
 
-        // 🔹 Estado de inscripción (seguro)
-        $estadoInscripcion = 'desconocido';
-        if ($inscripcion) {
-            $estadoInscripcion = $inscripcion->estado ?? 'pendiente';
-        }
+        // Definir estado de inscripción
+        $estadoInscripcion = $inscripcion->estado ?? 'pendiente';
 
-        // 🔹 Retornar vista del usuario
-        return view('dashboard.user', [
-            'user' => $user,
-            'inscripciones' => $inscripciones,
-            'tieneInscripcion' => $tieneInscripcion,
-            'inscripcion' => $inscripcion,
-            'estadoInscripcion' => $estadoInscripcion,
-        ]);
+        // Enviar a la vista dashboard.user
+        return view('dashboard.user', compact(
+            'user',
+            'inscripcion',
+            'tieneInscripcion',
+            'inscripciones',
+            'estadoInscripcion'
+        ));
     }
 }

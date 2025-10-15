@@ -23,28 +23,11 @@ use App\Http\Controllers\{
 
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admission/create', [AdmissionController::class, 'create'])->name('admission.create');
-    Route::post('/admission', [AdmissionController::class, 'store'])->name('admission.store');
-    Route::get('/admission/{id}/edit', [AdmissionController::class, 'edit'])->name('admission.edit');
-    Route::put('/admission/{id}', [AdmissionController::class, 'update'])->name('admission.update');
-});
-
-
-
-
-Route::put('/admission/{id}', [AdmissionController::class, 'update'])->name('admission.update');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admission/{id}/edit', [AdmissionController::class, 'edit'])->name('admission.edit');
-});
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Formulario de inscripción
-    Route::get('/inscripcion/edit/{id}', [AdmissionController::class, 'edit'])->name('admission.edit');
-    Route::get('/inscripcion', [AdmissionController::class, 'create'])->name('complete-profile');
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
 });
 
 
@@ -56,7 +39,7 @@ Route::get('/', function () {
 });
 
 // ------------------------------------------------------
-// 🔐 DASHBOARD PRINCIPAL (solo admin y usuarios comunes)
+// 🔐 DASHBOARD PRINCIPAL (solo usuarios autenticados y verificados)
 // ------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -67,15 +50,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// ------------------------------------------------------
 // 🧾 MATRÍCULA / INSCRIPCIÓN PRINCIPAL
-// ------------------------------------------------------
 Route::middleware(['auth'])->group(function () {
     Route::get('/complete-profile', [AdmissionController::class, 'create'])->name('complete-profile');
-    Route::post('/admissions', [AdmissionController::class, 'store'])->name('admissions.store');
-    Route::get('/admissions', [AdmissionController::class, 'index'])->name('admissions.index');
-    Route::get('/admissions/{id}', [AdmissionController::class, 'show'])->name('admissions.show');
+    Route::resource('admissions', AdmissionController::class);
 });
+
+
 
 // ------------------------------------------------------
 // 📚 INSCRIPCIÓN A MATERIAS (usuario común)
@@ -83,10 +64,12 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/inscripcionmateria', [InscripcionMateriaController::class, 'index'])->name('inscripcionmateria.index');
     Route::post('/inscripcionmateria', [InscripcionMateriaController::class, 'store'])->name('inscripcionmateria.store');
-
     Route::get('/mis-materias', [InscripcionMateriaController::class, 'misMaterias'])->name('inscripcionmateria.misMaterias');
     Route::delete('/baja/{materia}', [InscripcionMateriaController::class, 'baja'])->name('inscripcionmateria.baja');
-    Route::get('/certificado/{id}', [InscripcionMateriaController::class, 'certificado'])->name('inscripcionmateria.certificado');
+    
+    Route::get('/inscripcionmateria/{id}/certificado', [InscripcionMateriaController::class, 'descargarCertificado'])
+    ->name('inscripcionmateria.certificado');
+
 });
 
 // ------------------------------------------------------
@@ -97,13 +80,26 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/inscripciones/{id}/estado', [InscripcionMateriaController::class, 'updateEstado'])->name('admin.inscripciones.updateEstado');
 });
 
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'listarAlumnos'])->name('admin.dashboard');
+    Route::get('/admin/alumno/{id}', [AdminController::class, 'inspeccionarAlumno'])->name('admin.inspeccionar');
+    Route::post('/admin/alumno/{id}/actualizar', [AdminController::class, 'actualizarAlumno'])
+    ->name('admin.actualizarAlumno');
+
+});
+
+
+
+
+
 // ------------------------------------------------------
 // 📘 CRUD DE MATERIAS
 // ------------------------------------------------------
 Route::resource('materias', MateriaController::class)->middleware('auth');
 
 // ------------------------------------------------------
-// 🧑‍🏫 ADMINISTRACIÓN GENERAL (solo admin)
+// 🧑‍💼 ADMINISTRACIÓN GENERAL (solo admin)
 // ------------------------------------------------------
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/inscripciones', [InscripcionController::class, 'index'])->name('inscripciones.index');

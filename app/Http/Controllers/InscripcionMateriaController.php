@@ -90,7 +90,6 @@ class InscripcionMateriaController extends Controller
     {
         $user = Auth::user();
 
-        // Admin redirigido al panel
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.inscripciones.index');
         }
@@ -127,7 +126,6 @@ class InscripcionMateriaController extends Controller
     public function adminIndex()
     {
         $inscripciones = InscripcionMateria::with(['materia', 'estudiante'])->get();
-
         return view('admin.inscripciones.index', compact('inscripciones'));
     }
 
@@ -150,15 +148,34 @@ class InscripcionMateriaController extends Controller
     /**
      * 📄 Descargar certificado (solo materias aprobadas)
      */
-    public function certificado($id)
+    public function descargarCertificado($id)
     {
-        $inscripcion = InscripcionMateria::with(['materia', 'estudiante'])->findOrFail($id);
+        $inscripcion = \App\Models\InscripcionMateria::with(['materia', 'estudiante'])->findOrFail($id);
+
 
         if ($inscripcion->estado !== 'Aprobado') {
             return redirect()->back()->with('error', 'Solo puedes descargar certificados de materias aprobadas.');
         }
 
-        $pdf = Pdf::loadView('inscripcionmateria.certificado_pdf', compact('inscripcion'));
-        return $pdf->download('Certificado_' . $inscripcion->materia->nombre . '.pdf');
+        // Asegurarse de que la relación estudiante esté cargada
+        $estudiante = $inscripcion->estudiante;
+
+        if (!$estudiante) {
+            return redirect()->back()->with('error', 'No se encontró la información del estudiante.');
+        }
+
+        $data = [
+            'estudiante' => $estudiante,
+            'materia' => $inscripcion->materia,
+            'fecha' => now()->format('d/m/Y'),
+        ];
+
+        // Generamos el PDF y pasamos las variables
+    $pdf = Pdf::loadView('inscripcionmateria.certificado_pdf', [
+        'inscripcion' => $inscripcion,
+        'user' => $inscripcion->estudiante,
+    ]);
+
+    return $pdf->download('Certificado_' . $inscripcion->materia->nombre . '.pdf');
     }
 }

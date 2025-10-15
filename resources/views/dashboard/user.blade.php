@@ -24,10 +24,11 @@
 
                 {{-- 🧾 Información Personal + Estado --}}
                 <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    
                     {{-- Información Personal --}}
                     <div class="bg-white rounded-xl shadow p-6">
                         <h3 class="text-xl font-semibold text-blue-600 mb-4">Información Personal</h3>
-                        <p><strong>Nombre:</strong> {{ $user->first_name }} {{ $user->last_name }}</p>
+                        <p><strong>Nombre:</strong> {{ $user->first_name ?? '' }} {{ $user->last_name ?? '' }}</p>
                         <p><strong>Email:</strong> {{ $user->email }}</p>
                         <p><strong>Rol:</strong> 
                             <span class="bg-blue-100 text-blue-700 text-sm px-2 py-1 rounded">
@@ -70,17 +71,13 @@
                     </h3>
 
                     @if($tieneInscripcion)
-                        <p class="text-gray-700 mb-4">
-                            
-                        </p>
-
                         {{-- Estado --}}
                         <div class="mb-4">
                             <strong>Estado de tu inscripción:</strong>
                             <span class="ml-2 px-3 py-1 rounded-full text-white
                                 @if($estadoInscripcion === 'pendiente') bg-yellow-500
-                                @elseif($estadoInscripcion === 'aprobada') bg-green-600
-                                @elseif($estadoInscripcion === 'rechazada') bg-red-600
+                                @elseif($estadoInscripcion === 'aprobado') bg-green-600
+                                @elseif($estadoInscripcion === 'rechazado') bg-red-600
                                 @else bg-gray-500 @endif">
                                 {{ ucfirst($estadoInscripcion) }}
                             </span>
@@ -92,25 +89,32 @@
                                class="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">
                                 📘 Ir a inscripción de materias
                             </a>
-
+                                <a href="{{ route('inscripcionmateria.misMaterias') }}" 
+                                class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition">
+                                📖 Ver mis materias
+                                </a>
+                            </div>
                             {{-- Permitir editar si está pendiente --}}
                             @if($estadoInscripcion === 'pendiente' && $inscripcion)
-                                <a href="{{ route('admission.edit', $inscripcion->id) }}" 
+                                <a href="{{ route('admissions.edit', $inscripcion->id) }}" 
                                    class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700">
                                     ✏️ Editar inscripción
                                 </a>
                             @endif
                         </div>
+
                     @else
+                        {{-- Si no tiene inscripción --}}
                         <p class="text-gray-500 mb-4">
                             No has iniciado tu inscripción.
                         </p>
                         <a href="{{ route('complete-profile') }}" 
                            class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700">
-                            ✏️ Comenzar inscripción
+                            📝 Comenzar inscripción
                         </a>
                     @endif
                 </div>
+
             </div>
         </div>
     </div>

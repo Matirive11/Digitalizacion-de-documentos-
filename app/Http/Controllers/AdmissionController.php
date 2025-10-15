@@ -27,29 +27,32 @@ class AdmissionController extends Controller
     }
 
     /**
-     * Guardar formulario definitivo
+     * Guardar inscripción definitiva
      */
     public function store(Request $request)
     {
+        if (Admission::where('user_id', Auth::id())->exists()) {
+            return redirect()->route('dashboard')->with(
+                'error',
+                'Ya tenés una inscripción creada. Podés editarla desde tu panel si aún está pendiente.'
+            );
+        }
+
         $validatedData = $request->validate([
             'nombre' => 'nullable|string|max:255',
             'apellido' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
         ]);
 
-        // Convertir checkboxes a JSON
-        $fuenteInformacion = $request->input('fuente_informacion', []);
-        if (is_array($fuenteInformacion)) {
-            $validatedData['fuente_informacion'] = json_encode($fuenteInformacion);
+        if ($request->has('fuente_informacion')) {
+            $validatedData['fuente_informacion'] = json_encode($request->input('fuente_informacion', []));
         }
 
         $admission = new Admission();
         $admission->user_id = Auth::id();
-        $admission->estado = 'pendiente'; // Estado inicial
+        $admission->estado = 'pendiente';
 
-        // Cargar campos comunes
         $this->fillAdmissionFields($admission, $request, $validatedData);
-
         $admission->save();
 
         session()->forget('matriculacion_data');
@@ -64,18 +67,15 @@ class AdmissionController extends Controller
     {
         $admission = Admission::findOrFail($id);
 
-        // Solo el dueño puede editar su inscripción
         if ($admission->user_id !== Auth::id()) {
             abort(403, 'No autorizado.');
         }
 
-        // Solo si está pendiente
         if ($admission->estado !== 'pendiente') {
-            return redirect()->route('dashboard')->with('error', 'No podés editar una inscripción aprobada o rechazada.');
+            return redirect()->route('dashboard')->with('error', 'No podés editar una inscripción aprobado o rechazado.');
         }
 
-        // Mostrar formulario de edición
-        return view('matriculacion.edit', compact('admission'));
+        return view('matriculacion.form1', compact('admission'));
     }
 
     /**
@@ -93,25 +93,25 @@ class AdmissionController extends Controller
             return redirect()->route('dashboard')->with('error', 'Solo podés modificar inscripciones pendientes.');
         }
 
-        $validatedData = $request->validate([
-            'nombre' => 'nullable|string|max:255',
-            'apellido' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'fecha_nacimiento' => 'nullable|date',
+            'documento' => 'nullable|string|max:50',
+            'email' => 'nullable|email',
         ]);
 
-        $fuenteInformacion = $request->input('fuente_informacion', []);
-        if (is_array($fuenteInformacion)) {
-            $validatedData['fuente_informacion'] = json_encode($fuenteInformacion);
-        }
-
-        $this->fillAdmissionFields($admission, $request, $validatedData);
+        // Usamos el método existente para llenar correctamente
+        $this->fillAdmissionFields($admission, $request, $validated);
         $admission->save();
 
-        return redirect()->route('dashboard')->with('success', 'Inscripción actualizada correctamente.');
+        return redirect()
+            ->route('admissions.edit', $admission->id)
+            ->with('success', '✅ Los datos fueron actualizados correctamente.');
     }
 
     /**
-     * Método reutilizable para llenar campos
+     * Completa los campos del modelo
      */
     private function fillAdmissionFields(Admission $admission, Request $request, array $validatedData): void
     {

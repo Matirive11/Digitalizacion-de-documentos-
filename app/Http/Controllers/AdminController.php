@@ -3,44 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Admission;
 use App\Models\InscripcionMateria;
-use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function index()
+    // 📋 Muestra todos los alumnos con formulario enviado
+    public function listarAlumnos()
     {
-        $inscripciones = Admission::with('user')->get();
-        $materias = InscripcionMateria::with(['materia', 'user'])->get();
+        // Solo usuarios que tengan una admission
+        $alumnos = User::whereHas('admission')->with('admission')->get();
 
-        return view('admin.inscripciones.index', compact('inscripciones', 'materias'));
+        return view('dashboard.admin', compact('alumnos'));
     }
 
-    public function aprobarInscripcion($id)
+    // 👀 Ver detalle del alumno
+    public function inspeccionarAlumno($id)
     {
-        $inscripcion = Admission::findOrFail($id);
-        $inscripcion->estado = 'aprobada';
-        $inscripcion->save();
+        $alumno = User::with(['admission', 'inscripciones.materia'])->findOrFail($id);
 
-        return back()->with('success', 'La inscripción fue aprobada correctamente.');
+        $admission = $alumno->admission;
+        $materias = $alumno->inscripciones;
+
+        return view('dashboard.inspeccionar', compact('alumno', 'admission', 'materias'));
     }
 
-    public function rechazarInscripcion($id)
+    // 📝 Actualizar estados
+    public function actualizarAlumno(Request $request, $id)
     {
-        $inscripcion = Admission::findOrFail($id);
-        $inscripcion->estado = 'rechazada';
-        $inscripcion->save();
+        // ✅ Validar que el estado sea uno de los permitidos
+        $request->validate([
+            'estado_formulario' => 'nullable|in:pendiente,aprobado,rechazado',
+        ]);
 
-        return back()->with('success', 'La inscripción fue rechazada.');
-    }
+        // 🔹 Actualizar estado del formulario
+        $admission = Admission::where('user_id', $id)->first();
+        if ($admission) {
+            $estado = $request->input('estado_formulario');
 
-    public function actualizarEstadoMateria(Request $request, $id)
-    {
-        $materia = InscripcionMateria::findOrFail($id);
-        $materia->estado = $request->input('estado');
-        $materia->save();
+            // solo actualiza si hay un valor válido
+            if (in_array($estado, ['pendiente', 'aprobado', 'rechazado'])) {
+                $admission->estado = $estado;
+                $admission->save();
+            }
+        }
 
-        return back()->with('success', 'El estado de la materia fue actualizado.');
+        // 🔹 Actualizar estados de materias (si existen)
+        if ($request->has('materias')) {
+            foreach ($request->materias as $materia_id => $estado) {
+                $inscripcion = InscripcionMateria::find($materia_id);
+                if ($inscripcion) {
+                    $inscripcion->estado = $estado;
+                    $inscripcion->save();
+                }
+            }
+        }
+
+        return redirect()->route('admin.dashboard')
+            ->with('success', '✅ Alumno actualizado correctamente.');
     }
 }

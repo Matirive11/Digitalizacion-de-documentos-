@@ -34,7 +34,7 @@
                 <div class="p-6 border rounded-xl bg-white shadow hover:shadow-lg transition relative materia-item" data-estado="{{ $inscripcion->estado }}">
 
                     {{-- Nombre de materia --}}
-                    <h2 class="text-lg font-semibold text-gray-800">{{ $inscripcion->materia->nombre }}</h2>
+                    <h2 class="text-lg font-semibold text-gray-800">{{ $inscripcion->materia->nombre ?? 'Sin nombre' }}</h2>
                     <p class="text-sm text-gray-600">Año: {{ $inscripcion->materia->anio ?? 'No especificado' }}</p>
 
                     {{-- Fecha de inscripción --}}
@@ -56,9 +56,9 @@
                     <div class="mt-5 flex flex-col gap-2">
                         {{-- Descargar certificado si está aprobado --}}
                         @if($inscripcion->estado === 'Aprobado')
-                            <a href="{{ route('inscripcionmateria.certificado', $inscripcion->id) }}"
-                               class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow transition text-center">
-                                📄 Descargar certificado
+                            <a href="{{ route('inscripcionmateria.certificado', $inscripcion->id) }}" 
+                               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-center">
+                                📄 Descargar Certificado
                             </a>
                         @endif
 
