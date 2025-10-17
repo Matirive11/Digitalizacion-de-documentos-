@@ -76,7 +76,12 @@ class User extends Authenticatable
         $nombre = trim("{$this->first_name} {$this->last_name}");
         return $nombre !== '' ? $nombre : 'Sin nombre';
     }
-
+    
+// User.php
+public function examenes()
+{
+    return $this->hasMany(InscripcionExamen::class);
+}
 
 
 

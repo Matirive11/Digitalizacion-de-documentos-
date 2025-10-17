@@ -84,16 +84,23 @@
                         </div>
 
                         {{-- Botones --}}
-                        <div class="flex justify-center gap-4">
-                            <a href="{{ route('inscripcionmateria.index') }}" 
-                               class="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700">
-                                📘 Ir a inscripción de materias
-                            </a>
+                            <div class="flex justify-center gap-4">
+                                <a href="{{ route('inscripcionmateria.index') }}" 
+                                class="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition">
+                                    📘 Ir a inscripción de materias
+                                </a>
+
                                 <a href="{{ route('inscripcionmateria.misMaterias') }}" 
-                                class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition">
-                                📖 Ver mis materias
+                                class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition">
+                                    📖 Ver mis materias
+                                </a>
+
+                                <a href="{{ route('examenes.index') }}" 
+                                class="px-6 py-3 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition">
+                                    🧾 Ir a inscripción de exámenes
                                 </a>
                             </div>
+
                             {{-- Permitir editar si está pendiente --}}
                             @if($estadoInscripcion === 'pendiente' && $inscripcion)
                                 <a href="{{ route('admissions.edit', $inscripcion->id) }}" 

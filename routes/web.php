@@ -18,10 +18,9 @@ use App\Http\Controllers\{
     InscripcionMateriaController,
     MateriaController,
     DashboardController,
-    AdminController
+    AdminController,
+    ExamenController
 };
-
-
 
 
 
@@ -69,6 +68,22 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/inscripcionmateria/{id}/certificado', [InscripcionMateriaController::class, 'descargarCertificado'])
     ->name('inscripcionmateria.certificado');
+
+});
+
+// ------------------------------------------------------
+// 📘 INSCRIPCIÓN A EXÁMENES FINALES (usuario común)
+// ------------------------------------------------------
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inscripcion-examenes', [ExamenController::class, 'index'])->name('examenes.index');
+    Route::post('/inscripcion-examenes', [ExamenController::class, 'store'])->name('examenes.store');
+    
+
+Route::get('/mis-examenes', [ExamenController::class, 'misExamenes'])
+    ->name('examenes.misExamenes')
+    ->middleware('auth');
+Route::delete('/examenes/{id}/baja', [App\Http\Controllers\ExamenController::class, 'baja'])->name('examenes.baja');
+
 
 });
 
